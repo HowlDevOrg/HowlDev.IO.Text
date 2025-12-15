@@ -247,6 +247,7 @@ I couldn't wait.
   - `ConvertTokenStreamToConfigOption`
   - Added a few more tests to cover cases I knew existed but now throws errors (such as sending an EndArray inside of an object) which should hopefully help debug. 
 - Created an Actions workflow to automatically publish to NuGet. 
+  - Sometimes I'm not very good at CI/CD.
 
 2.0-beta (12/12/25)
 
