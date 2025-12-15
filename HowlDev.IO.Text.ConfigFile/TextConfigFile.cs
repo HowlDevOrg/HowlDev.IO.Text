@@ -291,10 +291,10 @@ public class TextConfigFile : IBaseConfigOption {
     /// <summary>
     /// This is the internal tool that creates the configuration, but I've decided to expose it if 
     /// you create your own parser functions. Generally, you don't need to worry about 
-    /// this at all, but if you do, you can make your own parsers (which just provides an enumerable of tokens). 
-    /// You can use this to check that your parser is working properly if it were a file reader. 
+    /// this at all, but if you do, just provide an enumerable of tokens. 
+    /// You can use this to check your parser.
     /// </summary>
-    /// <param name="func">Object that implements IEnumerable&lt;(TextToken, string)&gt;.</param>
+    /// <param name="func">Object that implements <c>TokenParser</c> (IEnumerable&lt;(TextToken, string)&gt;).</param>
     /// <returns><see cref="IBaseConfigOption"/></returns>
     public static IBaseConfigOption ParseFileAsOption(TokenParser func) {
         var stack = new Stack<Frame>();
