@@ -237,6 +237,16 @@ public async Task PersonRecordTest() {
 
 ## Changelog
 
+2.0 (12/15/25)
+
+I couldn't wait. 
+
+- Updated target to Net8.0.
+- I think I'm happy with the external signature. I may add or remove small things, but I think it's pretty good for now. Hopefully my next major version is not for a little while
+- Made my internal IBaseConfigOption parser-retriever public so you can generate your own using your own parser/experiment with the tokenizer system. 
+  - Added a few more tests to cover cases I knew existed but now throws errors (such as sending an EndArray inside of an object) which should hopefully help debug. 
+- Created an Actions workflow to automatically publish to NuGet. 
+
 2.0-beta (12/12/25)
 
 - Consolidated to TextConfigFile for all classes
