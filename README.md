@@ -1,6 +1,6 @@
-[ConfigFile](https://www.nuget.org/packages/HowlDev.IO.Text.ConfigFile/2.0.0): ![NuGet Version](https://img.shields.io/nuget/v/HowlDev.IO.Text.ConfigFile)
+[ConfigFile](https://www.nuget.org/packages/HowlDev.IO.Text.ConfigFile): ![NuGet Version](https://img.shields.io/nuget/v/HowlDev.IO.Text.ConfigFile)
 
-[Parsers](https://www.nuget.org/packages/HowlDev.IO.Text.Parsers/1.0.0): ![NuGet Version](https://img.shields.io/nuget/v/HowlDev.IO.Text.Parsers)
+[Parsers](https://www.nuget.org/packages/HowlDev.IO.Text.Parsers): ![NuGet Version](https://img.shields.io/nuget/v/HowlDev.IO.Text.Parsers)
 
 # HowlDev.IO.Text.ConfigFile
 
