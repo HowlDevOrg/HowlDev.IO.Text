@@ -2,8 +2,8 @@ name: Publish NuGet Packages
 
 on:
   push:
-      # paths:
-      #   - '**/*.csproj'
+      paths:
+        - '**/*.csproj'
 
 jobs:
   publish:
