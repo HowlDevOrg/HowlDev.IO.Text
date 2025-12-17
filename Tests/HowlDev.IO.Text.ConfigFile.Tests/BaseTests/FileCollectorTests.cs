@@ -1,6 +1,4 @@
-﻿using HowlDev.IO.Text.ConfigFile;
-
-namespace HowlDev.IO.Text.ConfigFile.Tests.BaseTests;
+﻿namespace HowlDev.IO.Text.ConfigFile.Tests.BaseTests;
 
 public class FileCollectorTests {
     [Test]

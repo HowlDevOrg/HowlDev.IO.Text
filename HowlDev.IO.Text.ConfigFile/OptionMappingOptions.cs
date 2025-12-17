@@ -4,7 +4,21 @@ namespace HowlDev.IO.Text.ConfigFile;
 /// Configure the As___&lt;T&gt;() functions. You can allow constructors, properties, 
 /// and strict matches. All default to False. See those comments for more details. 
 /// </summary>
-public record OptionMappingOptions {
+public class OptionMappingOptions {
+    /// <summary>
+    /// Default constructor, sets everything to False.
+    /// </summary>
+    public OptionMappingOptions() { }
+
+    /// <summary>
+    /// Pass in an OptionMappingOptions to duplicate it.
+    /// </summary>
+    public OptionMappingOptions(OptionMappingOptions option) {
+        UseConstructors = option.UseConstructors;
+        UseProperties = option.UseProperties;
+        StrictMatching = option.StrictMatching;
+    }
+
     /// <summary>
     /// Uses available constructors to construct an object. This action is performed first and will override
     /// the <see cref="UseProperties"/> flag if a valid constructor is found.
