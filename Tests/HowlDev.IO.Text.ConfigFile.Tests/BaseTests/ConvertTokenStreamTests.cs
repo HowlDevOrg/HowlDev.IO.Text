@@ -1,8 +1,8 @@
 using HowlDev.IO.Text.ConfigFile.Enums;
-using HowlDev.IO.Text.ConfigFile.Primitives;
 using HowlDev.IO.Text.ConfigFile.Interfaces;
-using HowlDev.IO.Text.Parsers.Enums;
+using HowlDev.IO.Text.ConfigFile.Primitives;
 using HowlDev.IO.Text.Parsers;
+using HowlDev.IO.Text.Parsers.Enums;
 using System.Collections;
 
 namespace HowlDev.IO.Text.ConfigFile.Tests.BaseTests;
@@ -12,9 +12,9 @@ internal class ParseFileAsOptionTests {
     public async Task AllObjectsMustBeClosedBeforeEnding() {
         // { Lorem: {} 
         var p = new PseudoTextParser([
-            (TextToken.StartObject, ""), 
+            (TextToken.StartObject, ""),
             (TextToken.KeyValue, "Lorem"),
-            (TextToken.StartObject, ""), 
+            (TextToken.StartObject, ""),
             (TextToken.EndObject, "")
         ]);
         await Assert.That(() => TextConfigFile.ConvertTokenStreamToConfigOption(p))
@@ -25,7 +25,7 @@ internal class ParseFileAsOptionTests {
     [Test]
     public async Task CannotCloseAnArrayWithObject() {
         var p = new PseudoTextParser([
-            (TextToken.StartArray, ""), 
+            (TextToken.StartArray, ""),
             (TextToken.Primitive, "Lorem"),
             (TextToken.EndObject, "")
         ]);
@@ -38,10 +38,10 @@ internal class ParseFileAsOptionTests {
     public async Task CannotCloseAnObjectWithArray() {
         // { Lorem: {} 
         var p = new PseudoTextParser([
-            (TextToken.StartObject, ""), 
+            (TextToken.StartObject, ""),
             (TextToken.KeyValue, "Lorem"),
             (TextToken.Primitive, "Lorem2"),
-            (TextToken.EndArray, ""), 
+            (TextToken.EndArray, ""),
         ]);
         await Assert.That(() => TextConfigFile.ConvertTokenStreamToConfigOption(p))
             .Throws<InvalidOperationException>()
