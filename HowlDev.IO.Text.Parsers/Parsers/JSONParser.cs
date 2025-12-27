@@ -4,7 +4,7 @@ using System.Collections;
 namespace HowlDev.IO.Text.Parsers;
 
 /// <summary/>
-public class JSONParser(string file) : TokenParser {
+public class JSONParser(string file) : ITokenParser {
     private int readingIndex = 0;
     /// <summary/>
     public IEnumerator<(TextToken, string)> GetEnumerator() {

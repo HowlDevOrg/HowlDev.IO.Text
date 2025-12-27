@@ -142,7 +142,7 @@ public class TextConfigFile : IBaseConfigOption {
     /// </summary>
     /// <param name="func">Object that implements <c>TokenParser</c> (IEnumerable&lt;(TextToken, string)&gt;).</param>
     /// <returns><see cref="IBaseConfigOption"/></returns>
-    public static IBaseConfigOption ConvertTokenStreamToConfigOption(TokenParser func) {
+    public static IBaseConfigOption ConvertTokenStreamToConfigOption(ITokenParser func) {
         var stack = new Stack<Frame>();
         stack.Push(new Frame(FrameKind.Root));
 

@@ -46,7 +46,7 @@ internal class ParseFileAsOptionTests {
     }
 }
 
-internal class PseudoTextParser(IEnumerable<(TextToken, string)> list) : TokenParser {
+internal class PseudoTextParser(IEnumerable<(TextToken, string)> list) : ITokenParser {
     public IEnumerator<(TextToken, string)> GetEnumerator() {
         foreach (var item in list) yield return item;
     }

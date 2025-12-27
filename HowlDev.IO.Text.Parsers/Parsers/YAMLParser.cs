@@ -6,7 +6,7 @@ namespace HowlDev.IO.Text.Parsers;
 
 /// <summary/>
 /// <param name="file"></param>
-public class YAMLParser(string file) : TokenParser {
+public class YAMLParser(string file) : ITokenParser {
     /// <summary/>
     public IEnumerator<(TextToken, string)> GetEnumerator() {
         List<(int indentCount, string data)> lines = YAMLHelper.ReturnOrderedLines(file);

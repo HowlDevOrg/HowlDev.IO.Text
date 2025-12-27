@@ -4,4 +4,4 @@ namespace HowlDev.IO.Text.Parsers;
 /// <summary>
 /// Returns tokens following the format listed in the README.
 /// </summary>
-public interface TokenParser : IEnumerable<(TextToken, string)>;
+public interface ITokenParser : IEnumerable<(TextToken, string)>;
