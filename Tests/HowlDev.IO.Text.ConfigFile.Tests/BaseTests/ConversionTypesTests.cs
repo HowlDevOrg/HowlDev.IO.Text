@@ -28,20 +28,28 @@ internal class ConversionTypesTests {
         await Assert.That(intPrimitive.ToUInt16(null)).IsEqualTo((ushort)42);
         await Assert.That(intPrimitive.ToUInt32(null)).IsEqualTo((uint)42);
         await Assert.That(intPrimitive.ToUInt64(null)).IsEqualTo((ulong)42);
+        await Assert.That(intPrimitive.As<int>()).IsEqualTo(42);
+        await Assert.That(intPrimitive.As<short>()).IsEqualTo((short)42);
+        await Assert.That(intPrimitive.As<long>()).IsEqualTo(42);
+        await Assert.That(intPrimitive.As<ushort>()).IsEqualTo((ushort)42);
+        await Assert.That(intPrimitive.As<uint>()).IsEqualTo((uint)42);
+        await Assert.That(intPrimitive.As<ulong>()).IsEqualTo((ulong)42);
 
         // Double/Decimal conversions
         var doublePrimitive = new PrimitiveConfigOption("3.14159");
         await Assert.That(doublePrimitive.ToDouble(null)).IsEqualTo(3.14159);
-        await Assert.That(doublePrimitive.ToDouble(null)).IsEqualTo(3.14159);
         await Assert.That(doublePrimitive.ToDecimal(null)).IsEqualTo((decimal)3.14159);
+        await Assert.That(doublePrimitive.As<double>()).IsEqualTo(3.14159);
+        await Assert.That(doublePrimitive.As<decimal>()).IsEqualTo((decimal)3.14159);
 
         // Boolean conversions
         var boolPrimitive = new PrimitiveConfigOption("true");
         await Assert.That(boolPrimitive.ToBoolean(null)).IsEqualTo(true);
-        await Assert.That(boolPrimitive.ToBoolean(null)).IsEqualTo(true);
+        await Assert.That(boolPrimitive.As<bool>()).IsEqualTo(true);
 
         var falseBoolPrimitive = new PrimitiveConfigOption("false");
         await Assert.That(falseBoolPrimitive.ToBoolean(null)).IsEqualTo(false);
+        await Assert.That(falseBoolPrimitive.As<bool>()).IsEqualTo(false);
     }
 
     [Test]
