@@ -64,9 +64,6 @@ public class ArrayConfigOption : IBaseConfigOption {
         return values;
     }
 
-    /// <inheritdoc/>
-    public IEnumerable<T> AsStrictEnumerable<T>() => AsEnumerable<T>(new OptionMappingOptions() { UseProperties = true, UseConstructors = true, StrictMatching = true });
-
     /// <summary/>
     public bool TryGet(string key, out IBaseConfigOption value) => throw new InvalidOperationException("TryGet not allowed on type of ArrayConfigOption.");
 

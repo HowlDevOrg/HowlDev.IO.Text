@@ -70,14 +70,14 @@ public class AsEnumerableClassTests {
     public async Task AsPersonRecordEnumerable() {
         string json = """
         [
-            "person": {
+            {
                 "name": "Jane",
                 "id": 23
             },
-            "person": {
+            {
                 "name": "Adam",
                 "id": 26
-            },
+            }
         ]
         """;
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.JSON, json);
@@ -89,51 +89,67 @@ public class AsEnumerableClassTests {
         await Assert.That(p[1].id).IsEqualTo(26);
     }
 }
-// public class AsStrictEnumerableClassTests {
-//     [Test]
-//     public async Task AsPersonStrictEnumerable() {
-//         string json = """
-//         [
-//             "person": {
-//                 "name": "Jane",
-//                 "id": 23
-//             },
-//             "person": {
-//                 "name": "Adam",
-//                 "id": 26
-//             },
-//         ]
-//         """;
-//         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.JSON, json);
+public class AsStrictEnumerableClassTests {
+    [Test]
+    public async Task AsPersonStrictEnumerable() {
+        string json = """
+        [
+            {
+                "name": "Jane",
+                "id": 23
+            },
+            {
+                "name": "Adam",
+                "id": 26
+            },
+        ]
+        """;
+        TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.JSON, json);
 
-//         List<PersonRecord> p = [.. reader.AsStrictEnumerable<PersonRecord>()];
-//         await Assert.That(p[0].name).IsEqualTo("Jane");
-//         await Assert.That(p[0].id).IsEqualTo(23);
-//         await Assert.That(p[1].name).IsEqualTo("Adam");
-//         await Assert.That(p[1].id).IsEqualTo(26);
-//     }
+        List<PersonRecord> p = [.. reader.AsStrictEnumerable<PersonRecord>()];
+        await Assert.That(p[0].name).IsEqualTo("Jane");
+        await Assert.That(p[0].id).IsEqualTo(23);
+        await Assert.That(p[1].name).IsEqualTo("Adam");
+        await Assert.That(p[1].id).IsEqualTo(26);
+    }
 
-//     [Test]
-//     public async Task AsPersonRecordEnumerable() {
-//         string json = """
-//         [
-//             "person": {
-//                 "name": "Jane",
-//                 "id": 23, 
-//                 "address": "you don't get to know"
-//             },
-//             "person": {
-//                 "name": "Adam",
-//                 "id": 26
-//             },
-//         ]
-//         """;
-//         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.JSON, json);
+    [Test]
+    public async Task AsFailingPersonRecordEnumerable1() {
+        string json = """
+        [
+            {
+                "name": "Jane",
+                "id": 23, 
+                "address": "you don't get to know"
+            }
+        ]
+        """;
+        TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.JSON, json);
+        OptionMappingOptions o = new () {StrictMatching = true, UseConstructors = true};
+        await Assert.That(() => reader.AsEnumerable<PersonRecord>(o))
+            .Throws<StrictMappingException>()
+            .WithMessage("""
+                        No suitable constructor found for PersonRecord. Consider removing the StrictMatching flag. 
+                        Tried to find a constructor that matched the following keys: name, id, address.
+                        """);
+    }
 
-//         await Assert.That(() => reader.AsStrictEnumerable<PersonRecord>())
-//             .Throws<StrictMappingException>()
-//             .WithMessage("""
-//                         Type PersonRecord must have a parameterless constructor to use property mapping.
-//                         """);
-//     }
-// }
+    [Test]
+    public async Task AsFailingPersonRecordEnumerable2() {
+        string json = """
+        [
+            {
+                "name": "Jane"
+            }
+        ]
+        """;
+        TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.JSON, json);
+        OptionMappingOptions o = new () {StrictMatching = true, UseConstructors = true};
+        await Assert.That(() => reader.AsEnumerable<PersonRecord>(o))
+            .Throws<StrictMappingException>()
+            .WithMessage("""
+                        No suitable constructor found for PersonRecord. Consider removing the StrictMatching flag. 
+                        Tried to find a constructor that matched the following keys: name.
+                        """);
+    }
+}
