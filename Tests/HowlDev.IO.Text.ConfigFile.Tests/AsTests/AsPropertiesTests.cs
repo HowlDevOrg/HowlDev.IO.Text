@@ -150,7 +150,7 @@ public class AsPropertiesStrictTests {
             .Throws<StrictMappingException>()
             .WithMessage("""
                         Property mismatch for BookClass. Consider removing the StrictMatching flag. 
-                        Could not find matching object key for property: height.
+                        Could not find matching object key for property: Height.
                         """);
     }
 
@@ -167,7 +167,7 @@ public class AsPropertiesStrictTests {
             .Throws<StrictMappingException>()
             .WithMessage("""
                         Property mismatch for BookClass. Consider removing the StrictMatching flag. 
-                        Could not find matching object key for property: name.
+                        Could not find matching object key for property: Name.
                         """);
     }
 }
