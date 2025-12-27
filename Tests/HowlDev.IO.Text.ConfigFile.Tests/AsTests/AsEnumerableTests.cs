@@ -1,6 +1,6 @@
 using HowlDev.IO.Text.ConfigFile.Enums;
 using HowlDev.IO.Text.ConfigFile.Tests.Classes;
-namespace HowlDev.IO.Text.ConfigFile.Tests;
+namespace HowlDev.IO.Text.ConfigFile.Tests.AsTests;
 
 public class AsEnumerablePrimitiveTests {
     [Test]
@@ -83,10 +83,10 @@ public class AsEnumerableClassTests {
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.JSON, json);
 
         List<PersonRecord> p = [.. reader.AsEnumerable<PersonRecord>()];
-        await Assert.That(p[0].name).IsEqualTo("Jane");
-        await Assert.That(p[0].id).IsEqualTo(23);
-        await Assert.That(p[1].name).IsEqualTo("Adam");
-        await Assert.That(p[1].id).IsEqualTo(26);
+        await Assert.That(p[0].Name).IsEqualTo("Jane");
+        await Assert.That(p[0].Id).IsEqualTo(23);
+        await Assert.That(p[1].Name).IsEqualTo("Adam");
+        await Assert.That(p[1].Id).IsEqualTo(26);
     }
 }
 public class AsStrictEnumerableClassTests {
@@ -105,12 +105,13 @@ public class AsStrictEnumerableClassTests {
         ]
         """;
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.JSON, json);
+        OptionMappingOptions o = new() { StrictMatching = true, UseConstructors = true };
 
-        List<PersonRecord> p = [.. reader.AsStrictEnumerable<PersonRecord>()];
-        await Assert.That(p[0].name).IsEqualTo("Jane");
-        await Assert.That(p[0].id).IsEqualTo(23);
-        await Assert.That(p[1].name).IsEqualTo("Adam");
-        await Assert.That(p[1].id).IsEqualTo(26);
+        List<PersonRecord> p = [.. reader.AsEnumerable<PersonRecord>(o)];
+        await Assert.That(p[0].Name).IsEqualTo("Jane");
+        await Assert.That(p[0].Id).IsEqualTo(23);
+        await Assert.That(p[1].Name).IsEqualTo("Adam");
+        await Assert.That(p[1].Id).IsEqualTo(26);
     }
 
     [Test]
@@ -125,7 +126,8 @@ public class AsStrictEnumerableClassTests {
         ]
         """;
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.JSON, json);
-        OptionMappingOptions o = new () {StrictMatching = true, UseConstructors = true};
+        OptionMappingOptions o = new() { StrictMatching = true, UseConstructors = true };
+
         await Assert.That(() => reader.AsEnumerable<PersonRecord>(o))
             .Throws<StrictMappingException>()
             .WithMessage("""
@@ -144,7 +146,8 @@ public class AsStrictEnumerableClassTests {
         ]
         """;
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.JSON, json);
-        OptionMappingOptions o = new () {StrictMatching = true, UseConstructors = true};
+        OptionMappingOptions o = new() { StrictMatching = true, UseConstructors = true };
+
         await Assert.That(() => reader.AsEnumerable<PersonRecord>(o))
             .Throws<StrictMappingException>()
             .WithMessage("""

@@ -1,6 +1,6 @@
 using HowlDev.IO.Text.ConfigFile.Enums;
 using HowlDev.IO.Text.ConfigFile.Tests.Classes;
-namespace HowlDev.IO.Text.ConfigFile.Tests;
+namespace HowlDev.IO.Text.ConfigFile.Tests.AsTests;
 
 public class AsPropertiesTests {
     [Test]
@@ -26,9 +26,9 @@ public class AsPropertiesTests {
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.TXT, txt);
 
         BookClass b = reader.AsProperties<BookClass>();
-        await Assert.That(b.name).IsEqualTo("Little Women");
-        await Assert.That(b.weight).IsEqualTo(2.3);
-        await Assert.That(b.height).IsEqualTo(12.3);
+        await Assert.That(b.Name).IsEqualTo("Little Women");
+        await Assert.That(b.Weight).IsEqualTo(2.3);
+        await Assert.That(b.Height).IsEqualTo(12.3);
     }
 
     [Test]
@@ -40,9 +40,9 @@ public class AsPropertiesTests {
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.TXT, txt);
 
         BookClass b = reader.AsProperties<BookClass>();
-        await Assert.That(b.name).IsEqualTo("Little Women");
-        await Assert.That(b.weight).IsEqualTo(0);
-        await Assert.That(b.height).IsEqualTo(12.3);
+        await Assert.That(b.Name).IsEqualTo("Little Women");
+        await Assert.That(b.Weight).IsEqualTo(0);
+        await Assert.That(b.Height).IsEqualTo(12.3);
     }
 
     [Test]
@@ -54,9 +54,9 @@ public class AsPropertiesTests {
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.TXT, txt);
 
         BookClass b = reader.AsProperties<BookClass>();
-        await Assert.That(b.name).IsEqualTo(string.Empty);
-        await Assert.That(b.weight).IsEqualTo(2.3);
-        await Assert.That(b.height).IsEqualTo(12.3);
+        await Assert.That(b.Name).IsEqualTo(string.Empty);
+        await Assert.That(b.Weight).IsEqualTo(2.3);
+        await Assert.That(b.Height).IsEqualTo(12.3);
     }
 
     [Test]
@@ -67,9 +67,9 @@ public class AsPropertiesTests {
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.TXT, txt);
 
         BookClass b = reader.AsProperties<BookClass>();
-        await Assert.That(b.name).IsEqualTo("Little Women");
-        await Assert.That(b.weight).IsEqualTo(0);
-        await Assert.That(b.height).IsEqualTo(0);
+        await Assert.That(b.Name).IsEqualTo("Little Women");
+        await Assert.That(b.Weight).IsEqualTo(0);
+        await Assert.That(b.Height).IsEqualTo(0);
     }
 }
 public class AsPropertiesStrictTests {
@@ -83,9 +83,9 @@ public class AsPropertiesStrictTests {
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.TXT, txt);
 
         BookClass b = reader.AsStrictProperties<BookClass>();
-        await Assert.That(b.name).IsEqualTo("Little Women");
-        await Assert.That(b.weight).IsEqualTo(2.3);
-        await Assert.That(b.height).IsEqualTo(12.3);
+        await Assert.That(b.Name).IsEqualTo("Little Women");
+        await Assert.That(b.Weight).IsEqualTo(2.3);
+        await Assert.That(b.Height).IsEqualTo(12.3);
     }
 
     [Test]

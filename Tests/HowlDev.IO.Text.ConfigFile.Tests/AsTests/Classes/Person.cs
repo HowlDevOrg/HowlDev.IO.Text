@@ -1,33 +1,32 @@
 namespace HowlDev.IO.Text.ConfigFile.Tests.Classes;
 
-
-public record PersonRecord(string name, int id);
+public record PersonRecord(string Name, int Id);
 public class PersonClass {
-    public string name { get; set; } = string.Empty;
-    public int id { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public int Id { get; set; }
 
     public PersonClass() { }
 
     public PersonClass(int id) {
-        this.id = id;
+        Id = id;
     }
 
     public PersonClass(string name) {
-        this.name = name;
+        Name = name;
     }
 
     public PersonClass(string name, int id) {
-        this.name = name;
-        this.id = id;
+        Name = name;
+        Id = id;
     }
 }
 public class StrictPersonClass {
-    public string name { get; set; } = string.Empty;
-    public int id { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public int Id { get; set; }
 
     public StrictPersonClass() { }
     public StrictPersonClass(string name, int id) {
-        this.name = name;
-        this.id = id;
+        Name = name;
+        Id = id;
     }
 }

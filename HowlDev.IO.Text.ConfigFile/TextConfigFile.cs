@@ -65,7 +65,7 @@ public class TextConfigFile : IBaseConfigOption {
     public uint ToUInt32(IFormatProvider? provider) => option.ToUInt32(provider);
     /// <inheritdoc/>
     public ulong ToUInt64(IFormatProvider? provider) => option.ToUInt64(provider);
-    
+
     /// <inheritdoc/>
     public T As<T>() => option.As<T>();
     /// <inheritdoc/>
@@ -86,8 +86,6 @@ public class TextConfigFile : IBaseConfigOption {
     public IEnumerable<T> AsEnumerable<T>() => option.AsEnumerable<T>();
     /// <inheritdoc/>
     public IEnumerable<T> AsEnumerable<T>(OptionMappingOptions options) => option.AsEnumerable<T>(options);
-    /// <inheritdoc/>
-    public IEnumerable<T> AsStrictEnumerable<T>() => option.AsEnumerable<T>();
     #endregion
 
     private List<string> acceptedExtensions = [".txt", ".yml", ".yaml", ".json"];

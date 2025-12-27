@@ -1,6 +1,6 @@
 using HowlDev.IO.Text.ConfigFile.Enums;
 using HowlDev.IO.Text.ConfigFile.Tests.Classes;
-namespace HowlDev.IO.Text.ConfigFile.Tests;
+namespace HowlDev.IO.Text.ConfigFile.Tests.AsTests;
 
 public class AsGenericTests {
     [Test]
@@ -12,8 +12,8 @@ public class AsGenericTests {
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.TXT, txt);
 
         PersonRecord p = reader.As<PersonRecord>();
-        await Assert.That(p.name).IsEqualTo("Jane");
-        await Assert.That(p.id).IsEqualTo(23);
+        await Assert.That(p.Name).IsEqualTo("Jane");
+        await Assert.That(p.Id).IsEqualTo(23);
     }
 
     [Test]
@@ -37,8 +37,8 @@ public class AsGenericTests {
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.TXT, txt);
 
         StrictPersonClass p = reader.As<StrictPersonClass>();
-        await Assert.That(p.name).IsEqualTo("Jane");
-        await Assert.That(p.id).IsEqualTo(0);
+        await Assert.That(p.Name).IsEqualTo("Jane");
+        await Assert.That(p.Id).IsEqualTo(0);
     }
 }
 
@@ -52,8 +52,8 @@ public class AsGenericStrictTests {
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.TXT, txt);
 
         PersonRecord p = reader.AsStrict<PersonRecord>();
-        await Assert.That(p.name).IsEqualTo("Jane");
-        await Assert.That(p.id).IsEqualTo(23);
+        await Assert.That(p.Name).IsEqualTo("Jane");
+        await Assert.That(p.Id).IsEqualTo(23);
     }
 
     [Test]
@@ -114,7 +114,7 @@ public class AsGenericInnerTests {
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.JSON, json);
 
         PersonRecord p = reader["person"].As<PersonRecord>();
-        await Assert.That(p.name).IsEqualTo("Jane");
-        await Assert.That(p.id).IsEqualTo(23);
+        await Assert.That(p.Name).IsEqualTo("Jane");
+        await Assert.That(p.Id).IsEqualTo(23);
     }
 }

@@ -1,6 +1,6 @@
 using HowlDev.IO.Text.ConfigFile.Enums;
 using HowlDev.IO.Text.ConfigFile.Tests.Classes;
-namespace HowlDev.IO.Text.ConfigFile.Tests;
+namespace HowlDev.IO.Text.ConfigFile.Tests.AsTests;
 
 public class AsConstructedTests {
     [Test]
@@ -12,8 +12,8 @@ public class AsConstructedTests {
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.TXT, txt);
 
         PersonRecord p = reader.AsConstructed<PersonRecord>();
-        await Assert.That(p.name).IsEqualTo("Jane");
-        await Assert.That(p.id).IsEqualTo(23);
+        await Assert.That(p.Name).IsEqualTo("Jane");
+        await Assert.That(p.Id).IsEqualTo(23);
     }
 
     [Test]
@@ -25,8 +25,8 @@ public class AsConstructedTests {
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.TXT, txt);
 
         PersonClass p = reader.AsConstructed<PersonClass>();
-        await Assert.That(p.name).IsEqualTo("Jane");
-        await Assert.That(p.id).IsEqualTo(23);
+        await Assert.That(p.Name).IsEqualTo("Jane");
+        await Assert.That(p.Id).IsEqualTo(23);
     }
 
     [Test]
@@ -37,8 +37,8 @@ public class AsConstructedTests {
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.TXT, txt);
 
         PersonClass p = reader.AsConstructed<PersonClass>();
-        await Assert.That(p.name).IsEqualTo("Jane");
-        await Assert.That(p.id).IsEqualTo(0); // Default
+        await Assert.That(p.Name).IsEqualTo("Jane");
+        await Assert.That(p.Id).IsEqualTo(0); // Default
     }
 
     [Test]
@@ -49,8 +49,8 @@ public class AsConstructedTests {
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.TXT, txt);
 
         PersonClass p = reader.AsConstructed<PersonClass>();
-        await Assert.That(p.name).IsEqualTo(string.Empty);
-        await Assert.That(p.id).IsEqualTo(23);
+        await Assert.That(p.Name).IsEqualTo(string.Empty);
+        await Assert.That(p.Id).IsEqualTo(23);
     }
 
     [Test]
@@ -61,8 +61,8 @@ public class AsConstructedTests {
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.TXT, txt);
 
         PersonClass p = reader.AsConstructed<PersonClass>();
-        await Assert.That(p.name).IsEqualTo(string.Empty);
-        await Assert.That(p.id).IsEqualTo(0);
+        await Assert.That(p.Name).IsEqualTo(string.Empty);
+        await Assert.That(p.Id).IsEqualTo(0);
     }
 
     [Test]
@@ -76,8 +76,8 @@ public class AsConstructedTests {
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.TXT, txt);
 
         PersonClass p = reader.AsConstructed<PersonClass>();
-        await Assert.That(p.name).IsEqualTo("Jane");
-        await Assert.That(p.id).IsEqualTo(23);
+        await Assert.That(p.Name).IsEqualTo("Jane");
+        await Assert.That(p.Id).IsEqualTo(23);
     }
 
     [Test]
@@ -89,8 +89,8 @@ public class AsConstructedTests {
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.TXT, txt);
 
         PersonClass p = reader.AsConstructed<PersonClass>();
-        await Assert.That(p.name).IsEqualTo("Jane");
-        await Assert.That(p.id).IsEqualTo(23);
+        await Assert.That(p.Name).IsEqualTo("Jane");
+        await Assert.That(p.Id).IsEqualTo(23);
     }
 
     [Test]
@@ -102,8 +102,8 @@ public class AsConstructedTests {
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.TXT, txt);
 
         PersonClass p = reader.AsConstructed<PersonClass>();
-        await Assert.That(p.name).IsEqualTo("Jane");
-        await Assert.That(p.id).IsEqualTo(23);
+        await Assert.That(p.Name).IsEqualTo("Jane");
+        await Assert.That(p.Id).IsEqualTo(23);
     }
 
     [Test]
@@ -133,8 +133,8 @@ public class AsConstructedTests {
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.TXT, txt);
 
         PersonRecord p = reader.AsConstructed<PersonRecord>();
-        await Assert.That(p.name).IsEqualTo("Jane");
-        await Assert.That(p.id).IsEqualTo(23);
+        await Assert.That(p.Name).IsEqualTo("Jane");
+        await Assert.That(p.Id).IsEqualTo(23);
     }
 }
 public class AsConstructedStrictTests {
@@ -147,8 +147,8 @@ public class AsConstructedStrictTests {
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.TXT, txt);
 
         PersonRecord p = reader.AsStrictConstructed<PersonRecord>();
-        await Assert.That(p.name).IsEqualTo("Jane");
-        await Assert.That(p.id).IsEqualTo(23);
+        await Assert.That(p.Name).IsEqualTo("Jane");
+        await Assert.That(p.Id).IsEqualTo(23);
     }
 
     [Test]
@@ -192,8 +192,8 @@ public class AsConstructedStrictTests {
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.TXT, txt);
 
         StrictPersonClass p = reader.AsStrictConstructed<StrictPersonClass>();
-        await Assert.That(p.name).IsEqualTo("Jane");
-        await Assert.That(p.id).IsEqualTo(23);
+        await Assert.That(p.Name).IsEqualTo("Jane");
+        await Assert.That(p.Id).IsEqualTo(23);
     }
 
     [Test]
