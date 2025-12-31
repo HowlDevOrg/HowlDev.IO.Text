@@ -99,6 +99,21 @@ public class AsGenericStrictTests {
         await Assert.That(b.Weight).IsEqualTo(2.3);
         await Assert.That(b.Height).IsEqualTo(12.3);
     }
+
+    [Test]
+    public async Task BrokenBookWorksWithConstructorsToo() {
+        string txt = """
+        innerName: Little Women
+        weight: 2.3
+        height: 12.3
+        """;
+        TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.TXT, txt);
+
+        BrokenBookClass b = reader.AsStrict<BrokenBookClass>();
+        await Assert.That(b.Name).IsEqualTo("Little Women");
+        await Assert.That(b.Weight).IsEqualTo(2.3);
+        await Assert.That(b.Height).IsEqualTo(12.3);
+    }
 }
 public class AsGenericInnerTests {
     [Test]

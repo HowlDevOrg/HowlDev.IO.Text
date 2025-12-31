@@ -28,14 +28,6 @@ public class PrimitiveConfigOption : IBaseConfigOption {
     /// <summary/>
     public IBaseConfigOption this[int index] => throw new InvalidOperationException("List indexing operation invalid on type of PrimitiveConfigOption.");
     /// <summary/>
-    public List<string> AsStringList() => throw new InvalidOperationException("List returning not allowed on type PrimitiveConfigOption");
-    /// <summary/>
-    public List<int> AsIntList() => throw new InvalidOperationException("List returning not allowed on type PrimitiveConfigOption");
-    /// <summary/>
-    public List<double> AsDoubleList() => throw new InvalidOperationException("List returning not allowed on type PrimitiveConfigOption");
-    /// <summary/>
-    public List<bool> AsBoolList() => throw new InvalidOperationException("List returning not allowed on type PrimitiveConfigOption");
-    /// <summary/>
     public override string ToString() {
         return value;
     }

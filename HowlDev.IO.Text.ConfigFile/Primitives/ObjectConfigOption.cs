@@ -39,14 +39,6 @@ public class ObjectConfigOption : IBaseConfigOption {
     }
     /// <summary/>
     public IBaseConfigOption this[int index] => throw new InvalidOperationException("Operation invalid on type of ObjectConfigOption.");
-    /// <summary/>
-    public List<string> AsStringList() => throw new InvalidOperationException("List returning not allowed on type ObjectConfigOption");
-    /// <summary/>
-    public List<int> AsIntList() => throw new InvalidOperationException("List returning not allowed on type ObjectConfigOption");
-    /// <summary/>
-    public List<double> AsDoubleList() => throw new InvalidOperationException("List returning not allowed on type ObjectConfigOption");
-    /// <summary/>
-    public List<bool> AsBoolList() => throw new InvalidOperationException("List returning not allowed on type ObjectConfigOption");
 
     /// <summary/>
     public bool TryGet(string key, out IBaseConfigOption value) {
