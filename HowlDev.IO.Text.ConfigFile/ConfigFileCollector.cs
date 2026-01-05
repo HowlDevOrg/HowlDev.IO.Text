@@ -14,7 +14,7 @@ public class ConfigFileCollector {
     /// </summary>
     /// <exception cref="FormatException"></exception>
     /// <exception cref="NotSupportedException"></exception>
-    public ConfigFileCollector(List<string> filenames) {
+    public ConfigFileCollector(IEnumerable<string> filenames) {
         foreach (string s in filenames) {
             if (!Path.HasExtension(s)) throw new FormatException($"File {s} does not have an extension.");
             string extension = Path.GetExtension(s);
@@ -33,7 +33,7 @@ public class ConfigFileCollector {
         try {
             return files[filename];
         } catch {
-            List<string> keys = new(files.Select(v => v.Key));
+            List<string> keys = [.. files.Select(v => v.Key)];
             throw new FileNotFoundException($"Filename does not exist. Available keys: \n\t{string.Join("\n\t", keys)}");
         }
     }

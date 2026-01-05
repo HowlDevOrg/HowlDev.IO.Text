@@ -245,6 +245,10 @@ Some goals for next patch:
 
 ## Changelog
 
+3.0.1 (1/5/26)
+
+- Had some problems getting the parser type, testing a simple republish. 
+
 3.0 (12/26/25)
 
 SOME BREAKING CHANGES: 
@@ -338,6 +342,10 @@ The tokens come back in a particular way. There is a Frame object in the ConfigF
 That order has a general format with a few rules. I hope to have a better guide for tokenization in the future, but here are some: 
 - Objects must specify a key before applying a value
 - Primitives, close object tokens, and close array tokens can all be children to an object or array
+
+1.0.1 (1/5/26)
+
+- Had problems referencing ITokenParser, testing a simple republish. 
 
 1.0 (12/15/25)
 

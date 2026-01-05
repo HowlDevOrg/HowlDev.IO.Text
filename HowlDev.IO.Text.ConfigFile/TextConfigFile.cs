@@ -122,8 +122,8 @@ public class TextConfigFile : IBaseConfigOption {
     /// If you need an option that just reads all lines as a single primitive, use
     /// the YAML type. Otherwise, pick the type that best fits the format.
     /// </summary>
-    /// <param name="fileValue">JSON string</param>
     /// <param name="type">File type to parse</param>
+    /// <param name="fileValue">File string</param>
     public static TextConfigFile ReadTextAs(FileTypes type, string fileValue) {
         TextConfigFile file = new TextConfigFile();
         switch (type) {
