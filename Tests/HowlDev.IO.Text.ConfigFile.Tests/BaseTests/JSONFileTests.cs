@@ -112,4 +112,10 @@ public class TextReadingJSONTests {
         await Assert.That(reader[1].ToString(null)).IsEqualTo("lorem string");
         await Assert.That(reader[2].ToBoolean(null)).IsEqualTo(true);
     }
+
+    // [Test]
+    // public async Task CanReadArrayBracketsInQuotesCorrectly() {
+    //     TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.JSON, "{ \"value\": \"[]\"");
+    //     await Assert.That(reader["value"].ToString()).IsEqualTo("[]");
+    // }
 }
