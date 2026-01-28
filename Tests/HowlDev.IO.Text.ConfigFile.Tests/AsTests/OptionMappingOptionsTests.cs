@@ -1,4 +1,5 @@
 using HowlDev.IO.Text.ConfigFile.Enums;
+using HowlDev.IO.Text.ConfigFile.Exceptions;
 using HowlDev.IO.Text.ConfigFile.Tests.Classes;
 namespace HowlDev.IO.Text.ConfigFile.Tests;
 

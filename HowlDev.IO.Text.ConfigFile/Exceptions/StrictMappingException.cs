@@ -1,5 +1,5 @@
 using HowlDev.IO.Text.ConfigFile.Primitives;
-namespace HowlDev.IO.Text.ConfigFile;
+namespace HowlDev.IO.Text.ConfigFile.Exceptions;
 
 /// <summary>
 /// A mismatch of parameters in an <see cref="ObjectConfigOption"/>, either over or under, 

@@ -29,8 +29,8 @@ public class YAMLParser(string file) : ITokenParser {
         yield return (TextToken.StartObject, "");
         int currentIndent = lines[0].indentCount;
         for (int i = 0; i < lines.Count; i++) {
-            (int indentCount, string data) line = lines[i];
-            string[] splits = line.data.Split(':');
+            (int indentCount, string data) = lines[i];
+            string[] splits = data.Split(':');
             if (splits.Length > 2) {
                 throw new FormatException($"Don't include multiple (:) on the same line. I read key: \"{splits[0].Trim()}\"");
             }
@@ -60,14 +60,14 @@ public class YAMLParser(string file) : ITokenParser {
         yield return (TextToken.StartArray, "");
         int currentIndent = lines[0].indentCount;
         for (int i = 0; i < lines.Count; i++) {
-            (int indentCount, string data) line = lines[i];
-            if (currentIndent < line.indentCount) {
+            (int indentCount, string data) = lines[i];
+            if (currentIndent < indentCount) {
                 foreach (var item in ReadLinesAsList(NextLineLessOrEqual(lines, i))) yield return item;
                 i++;
                 while (i < lines.Count && lines[i].indentCount != currentIndent) { i++; }
                 i--;
             } else {
-                string lineData = line.data.Replace('-', ' ');
+                string lineData = data.Replace('-', ' ');
                 if (string.IsNullOrWhiteSpace(lineData)) {
                     continue;
                 }

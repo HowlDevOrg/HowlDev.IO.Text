@@ -1,4 +1,5 @@
 ﻿using HowlDev.IO.Text.ConfigFile.Enums;
+using HowlDev.IO.Text.ConfigFile.Exceptions;
 using HowlDev.IO.Text.ConfigFile.Interfaces;
 using System.ComponentModel;
 

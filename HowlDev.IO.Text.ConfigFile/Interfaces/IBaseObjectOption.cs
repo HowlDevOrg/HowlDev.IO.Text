@@ -1,3 +1,4 @@
+using HowlDev.IO.Text.ConfigFile.Exceptions;
 using System.ComponentModel;
 
 namespace HowlDev.IO.Text.ConfigFile.Interfaces;

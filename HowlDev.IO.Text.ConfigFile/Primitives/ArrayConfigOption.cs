@@ -64,6 +64,11 @@ public class ArrayConfigOption : IBaseConfigOption {
         return values;
     }
 
+    /// <inheritdoc />
+    public IEnumerable<T> AsStrictEnumerable<T>() {
+        throw new NotImplementedException();
+    }
+
     /// <summary/>
     public bool TryGet(string key, out IBaseConfigOption value) => throw new InvalidOperationException("TryGet not allowed on type of ArrayConfigOption.");
 

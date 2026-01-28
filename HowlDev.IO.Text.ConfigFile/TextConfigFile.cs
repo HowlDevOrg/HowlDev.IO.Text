@@ -86,6 +86,8 @@ public class TextConfigFile : IBaseConfigOption {
     public IEnumerable<T> AsEnumerable<T>() => option.AsEnumerable<T>();
     /// <inheritdoc/>
     public IEnumerable<T> AsEnumerable<T>(OptionMappingOptions options) => option.AsEnumerable<T>(options);
+    /// <inheritdoc/>
+    public IEnumerable<T> AsStrictEnumerable<T>() => option.AsStrictEnumerable<T>();
     #endregion
 
     private List<string> acceptedExtensions = [".txt", ".yml", ".yaml", ".json"];

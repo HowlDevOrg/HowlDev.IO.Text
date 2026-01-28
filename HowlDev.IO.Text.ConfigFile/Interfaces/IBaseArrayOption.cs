@@ -27,4 +27,12 @@ public interface IBaseArrayOption : IBasePrimitiveOption {
     /// <typeparam name="T">Primitive or Object</typeparam>
     /// <returns>Enumerable of the type parameter</returns>
     IEnumerable<T> AsEnumerable<T>(OptionMappingOptions options);
+    /// <summary>
+    /// Use primitives (int, bool double, string, DateTime, etc.) or classes to generate 
+    /// an enumerable of that type. Enforces strict typing for  For objects, uses the options passed in to parse with. 
+    /// See <see cref="AsEnumerable()"/> for logical defaults. 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    IEnumerable<T> AsStrictEnumerable<T>();
 }
