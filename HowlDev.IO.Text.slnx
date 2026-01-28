@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/Tests/">
+    <Project Path="Tests/HowlDev.IO.Text.ConfigFile.Tests/HowlDev.IO.Text.ConfigFile.Tests.csproj" />
+    <Project Path="Tests/HowlDev.IO.Text.Parsers.Tests/HowlDev.IO.Text.Parsers.Tests.csproj" />
+  </Folder>
+  <Project Path="HowlDev.IO.Text.ConfigFile/HowlDev.IO.Text.ConfigFile.csproj" />
+  <Project Path="HowlDev.IO.Text.Parsers/HowlDev.IO.Text.Parsers.csproj" />
+</Solution>
