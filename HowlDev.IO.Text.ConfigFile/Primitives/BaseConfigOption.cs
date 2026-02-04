@@ -16,7 +16,7 @@ public abstract class BaseConfigOption : IBaseConfigOption {
     protected string TypeName => GetType().Name;
 
     #region Abstract members that must be implemented by derived classes
-    /// <summary/>
+    /// <inheritdoc/>
     public abstract ConfigOptionType Type { get; }
     #endregion
 

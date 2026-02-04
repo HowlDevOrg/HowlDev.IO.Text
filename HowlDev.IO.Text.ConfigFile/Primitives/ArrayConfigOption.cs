@@ -10,21 +10,21 @@ public class ArrayConfigOption : BaseConfigOption {
     private List<IBaseConfigOption> array = [];
     private string resourcePath;
 
-    /// <summary/>
+    /// <inheritdoc/>
     public override ConfigOptionType Type => ConfigOptionType.Array;
-    /// <summary/>
+    /// <inheritdoc/>
     public override int Count => array.Count;
-    /// <summary/>
+    /// <inheritdoc/>
     public override IEnumerable<IBaseConfigOption> Items => array;
 
-    /// <summary/>
+    /// <inheritdoc/>
     public ArrayConfigOption(List<IBaseConfigOption> array, string parentPath = "", string myPath = "") {
         this.array = array;
         resourcePath = parentPath;
         if (myPath.Length > 0) resourcePath += "[" + myPath + "]";
     }
 
-    /// <summary/>
+    /// <inheritdoc/>
     public override IBaseConfigOption this[int index] {
         get {
             if (index < 0 || index >= array.Count) {
