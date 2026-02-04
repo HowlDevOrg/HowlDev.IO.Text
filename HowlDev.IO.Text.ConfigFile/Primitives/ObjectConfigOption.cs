@@ -7,18 +7,16 @@ namespace HowlDev.IO.Text.ConfigFile.Primitives;
 
 /// <summary/>
 [EditorBrowsable(EditorBrowsableState.Never)]
-public class ObjectConfigOption : IBaseConfigOption {
+public class ObjectConfigOption : BaseConfigOption {
     private Dictionary<string, IBaseConfigOption> obj = new Dictionary<string, IBaseConfigOption>();
     private string resourcePath;
 
     /// <summary/>
-    public ConfigOptionType Type => ConfigOptionType.Object;
+    public override ConfigOptionType Type => ConfigOptionType.Object;
     /// <summary/>
-    public int Count => obj.Count;
+    public override int Count => obj.Count;
     /// <summary/>
-    public IEnumerable<IBaseConfigOption> Items => throw new InvalidOperationException("Item enumeration not allowed on type of ObjectConfigOption.");
-    /// <summary/>
-    public IEnumerable<string> Keys => obj.Keys;
+    public override IEnumerable<string> Keys => obj.Keys;
 
     /// <summary/>
     public ObjectConfigOption(Dictionary<string, IBaseConfigOption> obj, string parentPath = "", string myPath = "") {
@@ -27,7 +25,7 @@ public class ObjectConfigOption : IBaseConfigOption {
         if (myPath.Length > 0) resourcePath += "[" + myPath + "]";
     }
     /// <summary/>
-    public IBaseConfigOption this[string key] {
+    public override IBaseConfigOption this[string key] {
         get {
             if (!obj.TryGetValue(key, out var value)) {
                 string error = $"Object does not contain key \"{key}\".";
@@ -38,116 +36,56 @@ public class ObjectConfigOption : IBaseConfigOption {
             return value;
         }
     }
-    /// <summary/>
-    public IBaseConfigOption this[int index] => throw new InvalidOperationException("Operation invalid on type of ObjectConfigOption.");
 
     /// <summary/>
-    public bool TryGet(string key, out IBaseConfigOption value) {
+    public override bool TryGet(string key, out IBaseConfigOption value) {
         return obj.TryGetValue(key, out value!); // I'm just passing it through. 
     }
 
     /// <summary/>
-    public bool Contains(string key) {
+    public override bool Contains(string key) {
         return obj.ContainsKey(key);
     }
 
-    /// <inheritdoc/>
-    public TypeCode GetTypeCode() => throw new InvalidOperationException("GetTypeCode not allowed on type of ObjectConfigOption.");
+
 
     /// <inheritdoc/>
-    public bool ToBoolean(IFormatProvider? provider) => throw new InvalidOperationException("ToBoolean not allowed on type of ObjectConfigOption.");
-
-    /// <inheritdoc/>
-    public byte ToByte(IFormatProvider? provider) => throw new InvalidOperationException("ToByte not allowed on type of ObjectConfigOption.");
-
-    /// <inheritdoc/>
-    public char ToChar(IFormatProvider? provider) => throw new InvalidOperationException("ToChar not allowed on type of ObjectConfigOption.");
-
-    /// <inheritdoc/>
-    public DateTime ToDateTime(IFormatProvider? provider) => throw new InvalidOperationException("ToDateTime not allowed on type of ObjectConfigOption.");
-
-    /// <inheritdoc/>
-    public decimal ToDecimal(IFormatProvider? provider) => throw new InvalidOperationException("ToDecimal not allowed on type of ObjectConfigOption.");
-
-    /// <inheritdoc/>
-    public double ToDouble(IFormatProvider? provider) => throw new InvalidOperationException("ToDouble not allowed on type of ObjectConfigOption.");
-
-    /// <inheritdoc/>
-    public short ToInt16(IFormatProvider? provider) => throw new InvalidOperationException("ToInt16 not allowed on type of ObjectConfigOption.");
-
-    /// <inheritdoc/>
-    public int ToInt32(IFormatProvider? provider) => throw new InvalidOperationException("ToInt32 not allowed on type of ObjectConfigOption.");
-
-    /// <inheritdoc/>
-    public long ToInt64(IFormatProvider? provider) => throw new InvalidOperationException("ToInt64 not allowed on type of ObjectConfigOption.");
-
-    /// <inheritdoc/>
-    public sbyte ToSByte(IFormatProvider? provider) => throw new InvalidOperationException("ToSByte not allowed on type of ObjectConfigOption.");
-
-    /// <inheritdoc/>
-    public float ToSingle(IFormatProvider? provider) => throw new InvalidOperationException("ToSingle not allowed on type of ObjectConfigOption.");
-
-    /// <inheritdoc/>
-    public string ToString(IFormatProvider? provider) => throw new InvalidOperationException("ToString not allowed on type of ObjectConfigOption.");
-
-    /// <inheritdoc/>
-    public object ToType(Type conversionType, IFormatProvider? provider) => throw new InvalidOperationException("ToType not allowed on type of ObjectConfigOption.");
-
-    /// <inheritdoc/>
-    public ushort ToUInt16(IFormatProvider? provider) => throw new InvalidOperationException("ToUInt16 not allowed on type of ObjectConfigOption.");
-
-    /// <inheritdoc/>
-    public uint ToUInt32(IFormatProvider? provider) => throw new InvalidOperationException("ToUInt32 not allowed on type of ObjectConfigOption.");
-
-    /// <inheritdoc/>
-    public ulong ToUInt64(IFormatProvider? provider) => throw new InvalidOperationException("ToUInt64 not allowed on type of ObjectConfigOption.");
-
-    /// <inheritdoc/>
-    public IEnumerable<T> AsEnumerable<T>() => throw new InvalidOperationException("AsEnumerable not allowed on type of ObjectConfigOption.");
-
-    /// <inheritdoc/>
-    public IEnumerable<T> AsEnumerable<T>(OptionMappingOptions options) => throw new InvalidOperationException("AsEnumerable not allowed on type of ObjectConfigOption.");
-
-    /// <inheritdoc/>
-    public IEnumerable<T> AsStrictEnumerable<T>() => throw new InvalidOperationException("AsEnumerable not allowed on type of ObjectConfigOption.");
-
-    /// <inheritdoc/>
-    public T As<T>() {
+    public override T As<T>() {
         return Map<T>(new OptionMappingOptions() { UseProperties = true, UseConstructors = true }, Contains, this);
     }
 
     /// <inheritdoc/>
-    public T As<T>(OptionMappingOptions option) {
+    public override T As<T>(OptionMappingOptions option) {
         return Map<T>(option, Contains, this);
     }
 
     /// <inheritdoc/>
-    public T AsStrict<T>() {
+    public override T AsStrict<T>() {
         return Map<T>(new OptionMappingOptions() { UseProperties = true, UseConstructors = true, StrictMatching = true }, Contains, this);
     }
 
     /// <inheritdoc/>
-    public T AsStrict<T>(OptionMappingOptions option) {
+    public override T AsStrict<T>(OptionMappingOptions option) {
         return Map<T>(new OptionMappingOptions(option) { StrictMatching = true }, Contains, this);
     }
 
     /// <inheritdoc/>
-    public T AsConstructed<T>() {
+    public override T AsConstructed<T>() {
         return Map<T>(new OptionMappingOptions() { UseConstructors = true }, Contains, this);
     }
 
     /// <inheritdoc/>
-    public T AsStrictConstructed<T>() {
+    public override T AsStrictConstructed<T>() {
         return Map<T>(new OptionMappingOptions() { UseConstructors = true, StrictMatching = true }, Contains, this);
     }
 
     /// <inheritdoc/>
-    public T AsProperties<T>() {
+    public override T AsProperties<T>() {
         return Map<T>(new OptionMappingOptions() { UseProperties = true }, Contains, this);
     }
 
     /// <inheritdoc/>
-    public T AsStrictProperties<T>() {
+    public override T AsStrictProperties<T>() {
         return Map<T>(new OptionMappingOptions() { UseProperties = true, StrictMatching = true }, Contains, this);
     }
 

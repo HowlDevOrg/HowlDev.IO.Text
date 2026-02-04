@@ -144,7 +144,7 @@ public class FirstOrderArrayConfigTests {
             ]);
         await Assert.That(() => array["lorem"])
             .Throws<InvalidOperationException>()
-            .WithMessage("Operation invalid on type of ArrayConfigOption.");
+            .WithMessage("Key indexing operation invalid on type of ArrayConfigOption.");
     }
 
     [Test]

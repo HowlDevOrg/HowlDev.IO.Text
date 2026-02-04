@@ -59,22 +59,22 @@ internal class ConversionTypesTests {
         // Unsupported IConvertible methods
         await Assert.That(() => primitive.ToByte(null))
             .Throws<InvalidOperationException>()
-            .WithMessage("ToByte not supported on type PrimitiveConfigOption");
+            .WithMessage("ToByte not allowed on type of PrimitiveConfigOption.");
 
         await Assert.That(() => primitive.ToChar(null))
             .Throws<InvalidOperationException>()
-            .WithMessage("ToChar not supported on type PrimitiveConfigOption");
+            .WithMessage("ToChar not allowed on type of PrimitiveConfigOption.");
 
         await Assert.That(() => primitive.ToSByte(null))
             .Throws<InvalidOperationException>()
-            .WithMessage("ToSByte not supported on type PrimitiveConfigOption");
+            .WithMessage("ToSByte not allowed on type of PrimitiveConfigOption.");
 
         await Assert.That(() => primitive.ToSingle(null))
             .Throws<InvalidOperationException>()
-            .WithMessage("ToSingle not supported on type PrimitiveConfigOption");
+            .WithMessage("ToSingle not allowed on type of PrimitiveConfigOption.");
 
         await Assert.That(() => primitive.ToType(typeof(string), null))
             .Throws<InvalidOperationException>()
-            .WithMessage("ToType not supported on type PrimitiveConfigOption");
+            .WithMessage("ToType not allowed on type of PrimitiveConfigOption.");
     }
 }
