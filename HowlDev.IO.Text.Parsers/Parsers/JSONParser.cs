@@ -5,132 +5,122 @@ namespace HowlDev.IO.Text.Parsers;
 
 /// <summary/>
 public class JSONParser(string file) : ITokenParser {
-    private int readingIndex = 0;
+    private static char[] chars = ['{', '}', '[', ']', ','];
     /// <summary/>
     public IEnumerator<(TextToken, string)> GetEnumerator() {
         string fileValue = file.Replace('\r', ' ').Replace('\n', ' ');
 
+        if (!file.StartsWith("[") && !file.StartsWith("{")) {
+            throw new InvalidDataException("JSON file must start with either [ or {");
+        }
         foreach (var item in ParseFileContents(fileValue)) yield return item;
     }
 
-    private IEnumerable<(TextToken, string)> ReadAsList(string file) {
-        yield return (TextToken.StartArray, "");
-        readingIndex++;
-        int nextComma = 0;
-        int nextBracket = 1;
 
-        string subString = "";
-        while (readingIndex != 0) {
-            nextComma = file.IndexOf(',', readingIndex);
-            nextBracket = file.IndexOf(']', readingIndex);
 
-            if (readingIndex >= nextBracket) {
-                readingIndex += 2;
-                break;
-            }
-
-            if (nextComma < 0) {
-                subString = file[readingIndex..nextBracket].Replace('"', ' '); // Uses a "range" operator for the substring
-            } else {
-                subString = file[readingIndex..nextComma].Replace('"', ' '); // Uses a "range" operator for the substring
-            }
-
-            if (subString.TrimStart().StartsWith('[')) {
-                readingIndex = file.IndexOf('[', readingIndex);
-                foreach (var item in ReadAsList(file)) yield return item;
-            } else if (subString.TrimStart().StartsWith('{')) {
-                readingIndex = file.IndexOf('{', readingIndex);
-                foreach (var item in ReadAsDictionary(file)) yield return item;
-            } else {
-                string primitive = subString.Replace(']', ' ').Trim();
-                if (!string.IsNullOrEmpty(primitive)) {
-                    yield return (TextToken.Primitive, primitive);
-                }
-                if (nextBracket > nextComma) {
-                    readingIndex = nextComma + 1;
-                } else {
-                    readingIndex = file.IndexOf(']', readingIndex);
-                }
-            }
-        }
-        yield return (TextToken.EndArray, "");
-    }
-
-    private IEnumerable<(TextToken, string)> ReadAsDictionary(string file) {
-        yield return (TextToken.StartObject, "");
-        readingIndex++;
-        int nextComma = 0;
-        int nextBracket = 0;
-
-        string subString = "";
-        string key = "";
-        string value = "";
-        bool breakFlag = false;
-        while (readingIndex != 0) {
-            nextComma = file.IndexOf(',', readingIndex);
-            nextBracket = file.IndexOf('}', readingIndex);
-
-            if (nextComma < 0) {
-                subString = file[readingIndex..nextBracket].Replace('"', ' '); // Uses a "range" operator for the substring
-                int colonIndex = subString.IndexOf(':');
-                key = subString[0..colonIndex];
-                colonIndex++;
-                value = subString[colonIndex..];
-            } else {
-                subString = file[readingIndex..nextComma].Replace('"', ' ');
-                int colonIndex = subString.IndexOf(':');
-                if (colonIndex < 0) {
-                    readingIndex = nextComma + 1;
+    private static IEnumerable<(TextToken, string)> ParseFileContents(string file) {
+        int index = 0;
+        while (index < file.Length) {
+            (int i, char c) = NextCharacter(file, index);
+            switch (c) {
+                case '{':
+                    yield return (TextToken.StartObject, "");
+                    index = i + 1;
                     break;
-                }
-                key = subString[0..colonIndex];
-                colonIndex++;
-                if (nextComma > nextBracket) {
-                    breakFlag = true;
-                    value = subString[colonIndex..(subString.Length - 1)];
-                } else {
-                    value = subString[colonIndex..];
-                }
+                case '}':
+                    // Process any content before the closing brace
+                    if (i > index) {
+                        string segment = file.Substring(index, i - index).Trim();
+                        if (!string.IsNullOrEmpty(segment)) {
+                            foreach (var item in ProcessSegment(segment)) yield return item;
+                        }
+                    }
+                    yield return (TextToken.EndObject, "");
+                    index = i + 1;
+                    break;
+                case '[':
+                    yield return (TextToken.StartArray, "");
+                    index = i + 1;
+                    break;
+                case ']':
+                    // Process any content before the closing bracket
+                    if (i > index) {
+                        string segment = file.Substring(index, i - index).Trim();
+                        if (!string.IsNullOrEmpty(segment)) {
+                            foreach (var item in ProcessSegment(segment)) yield return item;
+                        }
+                    }
+                    yield return (TextToken.EndArray, "");
+                    index = i + 1;
+                    break;
+                case ',':
+                    // Process the content between the last index and this comma
+                    if (i > index) {
+                        string segment = file.Substring(index, i - index).Trim();
+                        if (!string.IsNullOrEmpty(segment)) {
+                            foreach (var item in ProcessSegment(segment)) yield return item;
+                        }
+                    }
+                    index = i + 1;
+                    break;
+                default: 
+                    index++;
+                    break;
             }
-
-            if (readingIndex >= nextBracket) {
-                readingIndex += 2;
-                break;
-            }
-
-            if (value.TrimStart().StartsWith('[')) {
-                readingIndex = file.IndexOf('[', readingIndex);
-                yield return (TextToken.KeyValue, key.Trim());
-                foreach (var item in ReadAsList(file)) yield return item;
-                continue;
-            } else if (value.TrimStart().StartsWith('{')) {
-                readingIndex = file.IndexOf('{', readingIndex);
-                yield return (TextToken.KeyValue, key.Trim());
-                foreach (var item in ReadAsDictionary(file)) yield return item;
-                continue;
-            } else {
-                yield return (TextToken.KeyValue, key.Trim());
-                yield return (TextToken.Primitive, value.Replace('}', ' ').Trim());
-            }
-
-            if (breakFlag) {
-                readingIndex = nextBracket + 2;
-                break;
-            }
-
-            readingIndex = nextComma + 1;
         }
-        yield return (TextToken.EndObject, "");
+        
     }
 
-    private IEnumerable<(TextToken, string)> ParseFileContents(string file) {
-        if (file.StartsWith("[")) {
-            foreach (var item in ReadAsList(file)) yield return item;
-        } else if (file.StartsWith("{")) {
-            foreach (var item in ReadAsDictionary(file)) yield return item;
+    private static IEnumerable<(TextToken, string)> ProcessSegment(string segment) {
+        // Check if this segment contains a colon (key-value pair)
+        int colonIndex = segment.IndexOf(':');
+        if (colonIndex != -1) {
+            // This is a key-value pair
+            string key = segment.Substring(0, colonIndex).Trim().Trim('"');
+            string value = segment.Substring(colonIndex + 1).Trim().Trim('"');
+            yield return (TextToken.KeyValue, key);
+            yield return (TextToken.Primitive, value);
         } else {
-            throw new InvalidDataException("JSON file must start with either [ or {");
+            // This is a primitive value
+            string value = segment.Trim('"');
+            yield return (TextToken.Primitive, value);
         }
+    }
+
+    private static (int index, char c) NextCharacter(string file, int index) {
+        int currentPos = index;
+        
+        while (currentPos < file.Length) {
+            char currentChar = file[currentPos];
+            
+            // If we encounter a quote, skip everything until the closing quote
+            if (currentChar == '"') {
+                currentPos++; // Move past the opening quote
+                // Find the closing quote
+                while (currentPos < file.Length && file[currentPos] != '"') {
+                    // Handle escaped quotes
+                    if (file[currentPos] == '\\' && currentPos + 1 < file.Length) {
+                        currentPos += 2; // Skip escaped character
+                    } else {
+                        currentPos++;
+                    }
+                }
+                if (currentPos < file.Length) {
+                    currentPos++; // Move past the closing quote
+                }
+                continue;
+            }
+            
+            // Check if current character is one of our delimiter characters
+            if (chars.Contains(currentChar)) {
+                return (currentPos, currentChar);
+            }
+            
+            currentPos++;
+        }
+        
+        // If we reach here, no delimiter was found
+        return (-1, '\0');
     }
 
     IEnumerator IEnumerable.GetEnumerator() {

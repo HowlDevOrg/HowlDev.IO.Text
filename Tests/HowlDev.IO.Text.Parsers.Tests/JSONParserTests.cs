@@ -121,26 +121,26 @@ internal class JSONParserTests {
     }
 }
 public class JSONTextParserTests {
-    // [Test]
-    // public async Task ParserCanReadAnythingInsideQuotes() {
-    //     string json = """
-    //     {
-    //         "array": "[]", 
-    //         "object": "{}"
-    //     }
-    //     """;
-    //     List<(TextToken token, string value)> parsed = [.. new JSONParser(json)];
+    [Test]
+    public async Task ParserCanReadAnythingInsideQuotes() {
+        string json = """
+        {
+            "array": "[]", 
+            "object": "{}"
+        }
+        """;
+        List<(TextToken token, string value)> parsed = [.. new JSONParser(json)];
 
-    //     await Assert.That(parsed[0].token).IsEqualTo(TextToken.StartObject);
-    //     await Assert.That(parsed[1].token).IsEqualTo(TextToken.KeyValue);
-    //     await Assert.That(parsed[1].value).IsEqualTo("array");
-    //     await Assert.That(parsed[2].token).IsEqualTo(TextToken.Primitive);
-    //     await Assert.That(parsed[2].value).IsEqualTo("[]");
-    //     await Assert.That(parsed[3].token).IsEqualTo(TextToken.KeyValue);
-    //     await Assert.That(parsed[3].value).IsEqualTo("object");
-    //     await Assert.That(parsed[4].token).IsEqualTo(TextToken.Primitive);
-    //     await Assert.That(parsed[4].value).IsEqualTo("{}");
-    //     await Assert.That(parsed[5].token).IsEqualTo(TextToken.EndObject);
+        await Assert.That(parsed[0].token).IsEqualTo(TextToken.StartObject);
+        await Assert.That(parsed[1].token).IsEqualTo(TextToken.KeyValue);
+        await Assert.That(parsed[1].value).IsEqualTo("array");
+        await Assert.That(parsed[2].token).IsEqualTo(TextToken.Primitive);
+        await Assert.That(parsed[2].value).IsEqualTo("[]");
+        await Assert.That(parsed[3].token).IsEqualTo(TextToken.KeyValue);
+        await Assert.That(parsed[3].value).IsEqualTo("object");
+        await Assert.That(parsed[4].token).IsEqualTo(TextToken.Primitive);
+        await Assert.That(parsed[4].value).IsEqualTo("{}");
+        await Assert.That(parsed[5].token).IsEqualTo(TextToken.EndObject);
 
-    // }
+    }
 }
