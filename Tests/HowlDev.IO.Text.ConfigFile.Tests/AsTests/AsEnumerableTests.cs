@@ -62,6 +62,7 @@ public class AsEnumerablePrimitiveTests {
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.JSON, json);
 
         List<DateTime> p = [.. reader.AsEnumerable<DateTime>()];
+        await Assert.That(p.Count).IsEqualTo(2);
         await Assert.That(p[0].Day).IsEqualTo(4);
         await Assert.That(p[1].Minute).IsEqualTo(50);
     }
