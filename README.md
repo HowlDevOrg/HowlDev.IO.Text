@@ -245,6 +245,10 @@ Some goals for next patch:
 
 ## Changelog
 
+3.2.0 (2/6/26)
+
+- Updated to use most recent version of parser.
+
 3.1.0 (1/5/26)
 
 - Added enumerator to `ConfigFileCollector` so it's much easier to enumerate through a file set. 
@@ -346,6 +350,10 @@ The tokens come back in a particular way. There is a Frame object in the ConfigF
 That order has a general format with a few rules. I hope to have a better guide for tokenization in the future, but here are some: 
 - Objects must specify a key before applying a value
 - Primitives, close object tokens, and close array tokens can all be children to an object or array
+
+1.1.0 (2/6/26)
+
+- Updated to allow for reading strings of `{}` or `[]`, which previously did not work in JSON. 
 
 1.0.1 (1/5/26)
 
