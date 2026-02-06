@@ -102,6 +102,19 @@ public class RealisticJSONFileTests {
         await Assert.That(reader["second"]["arrayOfObjects"][1]["something2"].ToBoolean(null)).IsEqualTo(false);
         await Assert.That(reader["second"]["otherThing"].ToString(null)).IsEqualTo("hopefully");
     }
+
+    [Test]
+    public async Task TestDTO() {
+        TextConfigFile reader = new TextConfigFile("../../../data/JSON/Realistic/DtoObject.json");
+
+        await Assert.That(reader["namespace"].ToString(null)).IsEqualTo("ProjectTracker.Classes");
+        await Assert.That(reader["name"].ToString(null)).IsEqualTo("IdAndTitleDTO");
+        await Assert.That(reader["type"].ToString(null)).IsEqualTo("Class");
+
+        await Assert.That(reader["properties"][0]["name"].ToString(null)).IsEqualTo("Id");
+        await Assert.That(reader["properties"][0]["type"].ToString(null)).IsEqualTo("int[]");
+        await Assert.That(reader["properties"][0]["default"].ToString(null)).IsEqualTo("[]");
+    }
 }
 
 public class TextReadingJSONTests {
@@ -113,15 +126,15 @@ public class TextReadingJSONTests {
         await Assert.That(reader[2].ToBoolean(null)).IsEqualTo(true);
     }
 
-    // [Test]
-    // public async Task CanReadArrayBracketsInQuotesCorrectly() {
-    //     TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.JSON, "{ \"value\": \"[]\"");
-    //     await Assert.That(reader["value"].ToString()).IsEqualTo("[]");
-    // }
+    [Test]
+    public async Task CanReadArrayBracketsInQuotesCorrectly() {
+        TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.JSON, "{ \"value\": \"[]\" }");
+        await Assert.That(reader["value"].ToString()).IsEqualTo("[]");
+    }
 
-    // [Test]
-    // public async Task CanReadObjectBracketsInQuotesCorrectly() {
-    //     TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.JSON, "{ \"value\": \"{}\"");
-    //     await Assert.That(reader["value"].ToString()).IsEqualTo("{}");
-    // }
+    [Test]
+    public async Task CanReadObjectBracketsInQuotesCorrectly() {
+        TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.JSON, "{ \"value\": \"{}\" }");
+        await Assert.That(reader["value"].ToString()).IsEqualTo("{}");
+    }
 }
