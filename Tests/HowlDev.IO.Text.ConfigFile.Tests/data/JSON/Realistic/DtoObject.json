@@ -1,0 +1,12 @@
+{
+    "namespace": "ProjectTracker.Classes",
+    "name": "IdAndTitleDTO", 
+    "type": "Class", 
+    "properties": [
+        {
+            "name": "Id",
+            "type": "int[]", 
+            "default": "[]"
+        }
+    ]
+}

@@ -141,6 +141,41 @@ public class JSONTextParserTests {
         await Assert.That(parsed[4].token).IsEqualTo(TextToken.Primitive);
         await Assert.That(parsed[4].value).IsEqualTo("{}");
         await Assert.That(parsed[5].token).IsEqualTo(TextToken.EndObject);
+    }
 
+    [Test]
+    public async Task ParserCanReadArrayQuotes() {
+        string json = """
+        {
+            "value": "[]", 
+        }
+        """;
+        List<(TextToken token, string value)> parsed = [.. new JSONParser(json)];
+
+        await Assert.That(parsed.Count).IsEqualTo(4);
+        await Assert.That(parsed[0].token).IsEqualTo(TextToken.StartObject);
+        await Assert.That(parsed[1].token).IsEqualTo(TextToken.KeyValue);
+        await Assert.That(parsed[1].value).IsEqualTo("value");
+        await Assert.That(parsed[2].token).IsEqualTo(TextToken.Primitive);
+        await Assert.That(parsed[2].value).IsEqualTo("[]");
+        await Assert.That(parsed[3].token).IsEqualTo(TextToken.EndObject);
+    }
+
+    [Test]
+    public async Task ParserCanReadObjectQuotes() {
+        string json = """
+        {
+            "value": "{}", 
+        }
+        """;
+        List<(TextToken token, string value)> parsed = [.. new JSONParser(json)];
+
+        await Assert.That(parsed.Count).IsEqualTo(4);
+        await Assert.That(parsed[0].token).IsEqualTo(TextToken.StartObject);
+        await Assert.That(parsed[1].token).IsEqualTo(TextToken.KeyValue);
+        await Assert.That(parsed[1].value).IsEqualTo("value");
+        await Assert.That(parsed[2].token).IsEqualTo(TextToken.Primitive);
+        await Assert.That(parsed[2].value).IsEqualTo("{}");
+        await Assert.That(parsed[3].token).IsEqualTo(TextToken.EndObject);
     }
 }

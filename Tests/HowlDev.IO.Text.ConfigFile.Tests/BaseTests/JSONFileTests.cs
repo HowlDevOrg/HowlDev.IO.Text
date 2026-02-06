@@ -118,4 +118,10 @@ public class TextReadingJSONTests {
     //     TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.JSON, "{ \"value\": \"[]\"");
     //     await Assert.That(reader["value"].ToString()).IsEqualTo("[]");
     // }
+
+    // [Test]
+    // public async Task CanReadObjectBracketsInQuotesCorrectly() {
+    //     TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.JSON, "{ \"value\": \"{}\"");
+    //     await Assert.That(reader["value"].ToString()).IsEqualTo("{}");
+    // }
 }
