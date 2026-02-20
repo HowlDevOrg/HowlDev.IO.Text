@@ -21,7 +21,7 @@ public class JSONParser(string file) : ITokenParser {
     private static IEnumerable<(TextToken, string)> ParseFileContents(string file) {
         int index = 0;
         Stack<bool> contextStack = new(); // true = in object, false = in array
-        
+
         while (index < file.Length) {
             (int i, char c) = NextCharacter(file, index);
             switch (c) {
@@ -88,12 +88,12 @@ public class JSONParser(string file) : ITokenParser {
                     }
                     index = i + 1;
                     break;
-                default: 
+                default:
                     index++;
                     break;
             }
         }
-        
+
     }
 
     private static IEnumerable<(TextToken, string)> ProcessSegment(string segment, bool inObject) {
@@ -105,9 +105,9 @@ public class JSONParser(string file) : ITokenParser {
                 // This is a key-value pair
                 string key = segment.Substring(0, colonIndex).Trim().Trim('"');
                 string value = segment.Substring(colonIndex + 1).Trim();
-                
+
                 yield return (TextToken.KeyValue, key);
-                
+
                 // Only emit a primitive value if there's actually content after the colon
                 // If the value is empty, it means the actual value is an array or object that follows
                 if (!string.IsNullOrWhiteSpace(value)) {
@@ -117,7 +117,7 @@ public class JSONParser(string file) : ITokenParser {
                 yield break;
             }
         }
-        
+
         // This is a primitive value (either in an array or a value without a key in an object)
         string primitiveValue = segment.Trim('"');
         yield return (TextToken.Primitive, primitiveValue);
@@ -125,10 +125,10 @@ public class JSONParser(string file) : ITokenParser {
 
     private static (int index, char c) NextCharacter(string file, int index) {
         int currentPos = index;
-        
+
         while (currentPos < file.Length) {
             char currentChar = file[currentPos];
-            
+
             // If we encounter a quote, skip everything until the closing quote
             if (currentChar == '"') {
                 currentPos++; // Move past the opening quote
@@ -146,15 +146,15 @@ public class JSONParser(string file) : ITokenParser {
                 }
                 continue;
             }
-            
+
             // Check if current character is one of our delimiter characters
             if (chars.Contains(currentChar)) {
                 return (currentPos, currentChar);
             }
-            
+
             currentPos++;
         }
-        
+
         // If we reach here, no delimiter was found
         return (-1, '\0');
     }

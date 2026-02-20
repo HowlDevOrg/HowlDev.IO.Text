@@ -72,12 +72,12 @@ public class ArrayConfigOption : BaseConfigOption {
             var method = GetType().GetMethod(nameof(AsEnumerable), System.Type.EmptyTypes);
             var genericMethod = method!.MakeGenericMethod(elementType);
             var result = genericMethod.Invoke(this, null)!;
-            
+
             if (conversionType.IsArray) {
                 var toArrayMethod = typeof(Enumerable).GetMethod(nameof(Enumerable.ToArray))!.MakeGenericMethod(elementType);
                 return toArrayMethod.Invoke(null, [result])!;
             }
-            
+
             return result;
         }
         throw new InvalidDataException("Type conversion is not an enumerable.");
