@@ -245,6 +245,10 @@ Some goals for next patch:
 
 ## Changelog
 
+3.3.0 (2/20/26)
+
+- Now supports nested enumerables with the `As<>` keyword. Nested strings, ints, or other objects listed as an `IEnumerable`, `[]`, or `List`. 
+
 3.2.0 (2/6/26)
 
 - Updated to use most recent version of parser.

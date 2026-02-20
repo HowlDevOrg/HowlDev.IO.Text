@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
-		<Version>3.2.0</Version>
+		<Version>3.3.0</Version>
 		<Authors>Howl Dev</Authors>
 		<Description>A class that takes in text and allows a freeform way to read it. Objects are weakly typed, with indexers and strong typing exports for simple objects.</Description>
 		<Copyright>Copyright (c) Howl Dev 2025</Copyright>

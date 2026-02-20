@@ -4,13 +4,15 @@ public class SimpleNestedString {
     public string[] Strings { get; set; } = [];
 }
 public class SimpleNestedInt {
-    public int[] Ints { get; set; } = [];
+    public IEnumerable<int> Ints { get; set; } = [];
 }
 public class SimpleNestedBool {
-    public bool[] Bools { get; set; } = [];
+    public List<bool> Bools { get; set; } = [];
 }
 public class ComplexIntsAndStrings {
     public int[] Ints { get; set; } = [];
     public string[] Strings { get; set; } = [];
 }
-
+public class DoublyNestedStrings {
+    public SimpleNestedString[] UpperStrings { get; set; } = [];
+}

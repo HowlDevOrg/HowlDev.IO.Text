@@ -67,8 +67,19 @@ public class ArrayConfigOption : BaseConfigOption {
 
     /// <inheritdoc/>
     public override object ToType(Type conversionType, IFormatProvider? provider) {
-        if (conversionType.IsArray || conversionType.IsEnum) {
-            var elementType = conversionType.IsArray ? conversionType.GetElementType()! : conversionType;
+        if (typeof(Array).IsAssignableFrom(conversionType)
+            || (conversionType.IsGenericType && conversionType.GetGenericTypeDefinition() == typeof(List<>))
+            || (conversionType.IsGenericType && conversionType.GetGenericTypeDefinition() == typeof(IEnumerable<>))) {
+
+            Type elementType;
+            if (conversionType.IsArray) {
+                elementType = conversionType.GetElementType()!;
+            } else if (conversionType.IsGenericType) {
+                elementType = conversionType.GetGenericArguments()[0];
+            } else {
+                throw new InvalidDataException("Cannot determine element type.");
+            }
+
             var method = GetType().GetMethod(nameof(AsEnumerable), System.Type.EmptyTypes);
             var genericMethod = method!.MakeGenericMethod(elementType);
             var result = genericMethod.Invoke(this, null)!;
