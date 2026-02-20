@@ -21,3 +21,7 @@ public class BrokenBookClass {
     }
 
 }
+
+public class ArrayOfBooks {
+    public BookClass[] Books {get;set;} = [];
+}

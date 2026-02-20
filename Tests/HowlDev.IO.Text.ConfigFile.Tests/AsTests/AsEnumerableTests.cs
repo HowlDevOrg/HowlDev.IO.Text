@@ -161,7 +161,7 @@ public class AsStrictEnumerableClassTests {
 }
 public class AsNestedEnumerableClassTests {
     [Test]
-    public async Task HappyPathEnumOfStrings() {
+    public async Task EnumOfStrings() {
         string json = """
         {
             "strings" : [
@@ -175,5 +175,91 @@ public class AsNestedEnumerableClassTests {
         await Assert.That(result.Strings.Length).IsEqualTo(2);
         await Assert.That(result.Strings[0]).IsEqualTo("name");
         await Assert.That(result.Strings[1]).IsEqualTo("lorem");
+    }
+
+    [Test]
+    public async Task EnumOfInts() {
+        string json = """
+        {
+            "ints" : [
+                15, 23
+            ]
+        }
+        """;
+        TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.JSON, json);
+        SimpleNestedInt result = reader.As<SimpleNestedInt>();
+
+        await Assert.That(result.Ints.Length).IsEqualTo(2);
+        await Assert.That(result.Ints[0]).IsEqualTo(15);
+        await Assert.That(result.Ints[1]).IsEqualTo(23);
+    }
+
+    [Test]
+    public async Task EnumOfBools() {
+        string json = """
+        {
+            "bools" : [
+                true, false
+            ]
+        }
+        """;
+        TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.JSON, json);
+        SimpleNestedBool result = reader.As<SimpleNestedBool>();
+
+        await Assert.That(result.Bools.Length).IsEqualTo(2);
+        await Assert.That(result.Bools[0]).IsEqualTo(true);
+        await Assert.That(result.Bools[1]).IsEqualTo(false);
+    }
+
+    [Test]
+    public async Task MixedObject1() {
+        string json = """
+        {
+            "ints": [
+                23, 5
+            ], 
+            "strings": [
+                "Lorem", "Ipsum and more"
+            ]
+        }
+        """;
+        TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.JSON, json);
+        ComplexIntsAndStrings result = reader.As<ComplexIntsAndStrings>();
+
+        await Assert.That(result.Ints.Length).IsEqualTo(2);
+        await Assert.That(result.Ints[0]).IsEqualTo(23);
+        await Assert.That(result.Ints[1]).IsEqualTo(5);
+        await Assert.That(result.Strings.Length).IsEqualTo(2);
+        await Assert.That(result.Strings[0]).IsEqualTo("Lorem");
+        await Assert.That(result.Strings[1]).IsEqualTo("Ipsum and more");
+    }
+
+    [Test]
+    public async Task ObjectOfArrayOfObjects() {
+        string json = """
+        {
+            "books": [
+                {
+                    name: Little Women,
+                    weight: 2.3,
+                    height: 12.3
+                },
+                {
+                    name: Great Gatsby,
+                    weight: 15
+                },
+            ], 
+        }
+        """;
+        TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.JSON, json);
+        ArrayOfBooks result = reader.As<ArrayOfBooks>();
+
+        await Assert.That(result.Books.Length).IsEqualTo(2);
+        await Assert.That(result.Books[0].Name).IsEqualTo("Little Women");
+        await Assert.That(result.Books[0].Weight).IsEqualTo(2.3);
+        await Assert.That(result.Books[0].Height).IsEqualTo(12.3);
+        await Assert.That(result.Books[1].Name).IsEqualTo("Great Gatsby");
+        await Assert.That(result.Books[1].Weight).IsEqualTo(15);
+        await Assert.That(result.Books[1].Height).IsEqualTo(0);
     }
 }
