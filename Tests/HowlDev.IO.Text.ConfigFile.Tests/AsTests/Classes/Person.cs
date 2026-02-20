@@ -1,4 +1,4 @@
-namespace HowlDev.IO.Text.ConfigFile.Tests.Classes;
+namespace HowlDev.IO.Text.ConfigFile.Tests.AsTests.Classes;
 
 public record PersonRecord(string Name, int Id);
 public class PersonClass {

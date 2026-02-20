@@ -158,6 +158,16 @@ public class FirstOrderArrayConfigTests {
     }
 
     [Test]
+    public async Task NonArrayTypesThrowError() {
+        ArrayConfigOption array = new ArrayConfigOption([
+            new PrimitiveConfigOption("Lorem"),
+            ]);
+        await Assert.That(() => array.ToType("".GetType(), null))
+            .Throws<InvalidDataException>()
+            .WithMessage("Type conversion is not an enumerable.");
+    }
+
+    [Test]
     public async Task MixedArray() {
         ArrayConfigOption array = new ArrayConfigOption([
             new PrimitiveConfigOption("Lorem"),

@@ -1,6 +1,7 @@
 using HowlDev.IO.Text.ConfigFile.Enums;
 using HowlDev.IO.Text.ConfigFile.Exceptions;
-using HowlDev.IO.Text.ConfigFile.Tests.Classes;
+using HowlDev.IO.Text.ConfigFile.Tests.AsTests.Classes;
+
 namespace HowlDev.IO.Text.ConfigFile.Tests.AsTests;
 
 public class AsEnumerablePrimitiveTests {
@@ -156,5 +157,23 @@ public class AsStrictEnumerableClassTests {
                         No suitable constructor found for PersonRecord. Consider removing the StrictMatching flag. 
                         Tried to find a constructor that matched the following keys: name.
                         """);
+    }
+}
+public class AsNestedEnumerableClassTests {
+    [Test]
+    public async Task HappyPathEnumOfStrings() {
+        string json = """
+        {
+            "strings" : [
+                "name", "lorem"
+            ]
+        }
+        """;
+        TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.JSON, json);
+        SimpleNestedString result = reader.As<SimpleNestedString>();
+
+        await Assert.That(result.Strings.Length).IsEqualTo(2);
+        await Assert.That(result.Strings[0]).IsEqualTo("name");
+        await Assert.That(result.Strings[1]).IsEqualTo("lorem");
     }
 }

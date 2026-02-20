@@ -1,6 +1,7 @@
 using HowlDev.IO.Text.ConfigFile.Enums;
 using HowlDev.IO.Text.ConfigFile.Exceptions;
-using HowlDev.IO.Text.ConfigFile.Tests.Classes;
+using HowlDev.IO.Text.ConfigFile.Tests.AsTests.Classes;
+
 namespace HowlDev.IO.Text.ConfigFile.Tests.AsTests;
 
 public class AsConstructedTests {
