@@ -245,6 +245,11 @@ Some goals for next patch:
 
 ## Changelog
 
+3.3.2, 1.1.1 (2/26/26)
+
+- JSON parser now uses ReadOnlySpan&lt;span&gt;. I did a small benchmark of ~64kB file, and the test wasn't very different, but generally faster (maybe at most 5ms out of 15ms), so your mileage may vary. 
+- Version bump for both projects. 
+
 3.3.1 (2/25/26)
 
 - Version bump
