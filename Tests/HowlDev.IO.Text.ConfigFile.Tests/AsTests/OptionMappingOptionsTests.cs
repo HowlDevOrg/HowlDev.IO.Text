@@ -2,7 +2,7 @@ using HowlDev.IO.Text.ConfigFile.Enums;
 using HowlDev.IO.Text.ConfigFile.Exceptions;
 using HowlDev.IO.Text.ConfigFile.Tests.AsTests.Classes;
 
-namespace HowlDev.IO.Text.ConfigFile.Tests;
+namespace HowlDev.IO.Text.ConfigFile.Tests.AsTests;
 
 public class OptionMappingOptionsTests {
     [Test]

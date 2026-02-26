@@ -22,14 +22,10 @@ public class BrokenBookClass {
 
 }
 
-public class ArrayOfBooks {
-    private BookClass[] books = [];
+public class ArrayOfBooks(BookClass[] books) {
+    private BookClass[] books = books;
 
     public BookClass[] GetBooks() {
         return books;
-    }
-
-    public void SetBooks(BookClass[] value) {
-        books = value;
     }
 }

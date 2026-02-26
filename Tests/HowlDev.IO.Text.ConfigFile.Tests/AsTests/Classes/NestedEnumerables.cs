@@ -1,14 +1,10 @@
 namespace HowlDev.IO.Text.ConfigFile.Tests.AsTests.Classes;
 
-public class SimpleNestedString {
-    private string[] strings = [];
+public class SimpleNestedString(string[] strings) {
+    private string[] strings = strings;
 
     public string[] GetStrings() {
         return strings;
-    }
-
-    public void SetStrings(string[] value) {
-        strings = value;
     }
 }
 public class SimpleNestedInt {
@@ -17,35 +13,22 @@ public class SimpleNestedInt {
 public class SimpleNestedBool {
     public List<bool> Bools { get; set; } = [];
 }
-public class ComplexIntsAndStrings {
-    private int[] ints = [];
+public class ComplexIntsAndStrings(int[] ints, string[] strings) {
+    private int[] ints = ints;
 
     public int[] GetInts() {
         return ints;
     }
-    
-    public void SetInts(int[] value) {
-        ints = value;
-    }
-
-    private string[] strings = [];
+    private string[] strings = strings;
 
     public string[] GetStrings() {
         return strings;
     }
-
-    public void SetStrings(string[] value) {
-        strings = value;
-    }
 }
-public class DoublyNestedStrings {
-    private SimpleNestedString[] upperStrings = [];
+public class DoublyNestedStrings(SimpleNestedString[] upperStrings) {
+    private SimpleNestedString[] upperStrings = upperStrings;
 
     public SimpleNestedString[] GetUpperStrings() {
         return upperStrings;
-    }
-
-    public void SetUpperStrings(SimpleNestedString[] value) {
-        upperStrings = value;
     }
 }

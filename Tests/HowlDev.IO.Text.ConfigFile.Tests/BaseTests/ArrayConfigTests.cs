@@ -153,7 +153,7 @@ public class FirstOrderArrayConfigTests {
             new PrimitiveConfigOption("Lorem"),
             ]);
         await Assert.That(() => array[1])
-            .Throws<IndexOutOfRangeException>()
+            .Throws<ArgumentException>()
             .WithMessage("Index 1 is out of range. This array has 1 items.");
     }
 
@@ -211,7 +211,7 @@ public class SecondOrderArrayConfigTests {
                 ], "test", "1")
             ], "test");
         await Assert.That(() => array[0][2])
-            .Throws<IndexOutOfRangeException>()
+            .Throws<ArgumentException>()
             .WithMessage("Index 2 is out of range. This array has 2 items.\n\tPath: test[0]");
     }
 }

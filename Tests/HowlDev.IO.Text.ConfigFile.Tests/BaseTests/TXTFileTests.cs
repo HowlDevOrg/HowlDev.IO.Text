@@ -275,6 +275,6 @@ public class RealisticTXTFileTests {
 
         // Intentional error for closing commas
         await Assert.That(() => reader["data"][3])
-            .Throws<IndexOutOfRangeException>();
+            .Throws<ArgumentException>();
     }
 }
