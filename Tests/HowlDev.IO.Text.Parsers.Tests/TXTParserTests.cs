@@ -5,7 +5,7 @@ namespace HowlDev.IO.Text.Parsers.Tests;
 internal class TXTParserTests {
     [Test]
     public async Task String() {
-        List<(TextToken token, string value)> parsed = new(new TXTParser(File.ReadAllText("../../../data/TXT/String.txt")));
+        List<(TextToken token, string value)> parsed = [.. new TXTParser(File.ReadAllText("../../../data/TXT/String.txt"))];
         await Assert.That(parsed[0].token).IsEqualTo(TextToken.StartObject);
         await Assert.That(parsed[1].token).IsEqualTo(TextToken.KeyValue);
         await Assert.That(parsed[1].value).IsEqualTo("Lorem");
@@ -16,7 +16,7 @@ internal class TXTParserTests {
 
     [Test]
     public async Task MixedObject() {
-        List<(TextToken token, string value)> parsed = new(new TXTParser(File.ReadAllText("../../../data/TXT/MixedObject.txt")));
+        List<(TextToken token, string value)> parsed = [.. new TXTParser(File.ReadAllText("../../../data/TXT/MixedObject.txt"))];
         await Assert.That(parsed[0].token).IsEqualTo(TextToken.StartObject);
         await Assert.That(parsed[1].token).IsEqualTo(TextToken.KeyValue);
         await Assert.That(parsed[2].token).IsEqualTo(TextToken.Primitive);
@@ -33,7 +33,7 @@ internal class TXTParserTests {
 
     [Test]
     public async Task MixedArray() {
-        List<(TextToken token, string value)> parsed = new(new TXTParser(File.ReadAllText("../../../data/TXT/MixedArray.txt")));
+        List<(TextToken token, string value)> parsed = [.. new TXTParser(File.ReadAllText("../../../data/TXT/MixedArray.txt"))];
         await Assert.That(parsed[0].token).IsEqualTo(TextToken.StartObject);
         await Assert.That(parsed[1].token).IsEqualTo(TextToken.KeyValue);
         await Assert.That(parsed[1].value).IsEqualTo("Mixed Array");
@@ -48,7 +48,7 @@ internal class TXTParserTests {
 
     [Test]
     public async Task FourLineArray() {
-        List<(TextToken token, string value)> parsed = new(new TXTParser(File.ReadAllText("../../../data/TXT/FourLineArray.txt")));
+        List<(TextToken token, string value)> parsed = [.. new TXTParser(File.ReadAllText("../../../data/TXT/FourLineArray.txt"))];
         await Assert.That(parsed[0].token).IsEqualTo(TextToken.StartObject);
         await Assert.That(parsed[1].token).IsEqualTo(TextToken.KeyValue);
         await Assert.That(parsed[1].value).IsEqualTo("Four Line Array");

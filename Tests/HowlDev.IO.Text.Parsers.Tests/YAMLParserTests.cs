@@ -5,14 +5,14 @@ namespace HowlDev.IO.Text.Parsers.Tests;
 internal class YAMLParserTests {
     [Test]
     public async Task Primitive2() {
-        List<(TextToken token, string value)> parsed = new(new YAMLParser(File.ReadAllText("../../../data/YAML/Primitive2.yaml")));
+        List<(TextToken token, string value)> parsed = [.. new YAMLParser(File.ReadAllText("../../../data/YAML/Primitive2.yaml"))];
         await Assert.That(parsed[0].token).IsEqualTo(TextToken.Primitive);
         await Assert.That(parsed[0].value).IsEqualTo("This is a sample multiline string that may become useful");
     }
 
     [Test]
     public async Task Array() {
-        List<(TextToken token, string value)> parsed = new(new YAMLParser(File.ReadAllText("../../../data/YAML/Array.yaml")));
+        List<(TextToken token, string value)> parsed = [.. new YAMLParser(File.ReadAllText("../../../data/YAML/Array.yaml"))];
         await Assert.That(parsed[0].token).IsEqualTo(TextToken.StartArray);
         await Assert.That(parsed[1].token).IsEqualTo(TextToken.Primitive);
         await Assert.That(parsed[2].token).IsEqualTo(TextToken.Primitive);
@@ -23,7 +23,7 @@ internal class YAMLParserTests {
 
     [Test]
     public async Task Object() {
-        List<(TextToken token, string value)> parsed = new(new YAMLParser(File.ReadAllText("../../../data/YAML/Object.yaml")));
+        List<(TextToken token, string value)> parsed = [.. new YAMLParser(File.ReadAllText("../../../data/YAML/Object.yaml"))];
         await Assert.That(parsed[0].token).IsEqualTo(TextToken.StartObject);
         await Assert.That(parsed[1].token).IsEqualTo(TextToken.KeyValue);
         await Assert.That(parsed[2].token).IsEqualTo(TextToken.Primitive);
@@ -39,7 +39,7 @@ internal class YAMLParserTests {
 
     [Test]
     public async Task ArrayWithObject() {
-        List<(TextToken token, string value)> parsed = new(new YAMLParser(File.ReadAllText("../../../data/YAML/ArrayWithObject.yaml")));
+        List<(TextToken token, string value)> parsed = [.. new YAMLParser(File.ReadAllText("../../../data/YAML/ArrayWithObject.yaml"))];
         await Assert.That(parsed[0].token).IsEqualTo(TextToken.StartArray);
         await Assert.That(parsed[1].token).IsEqualTo(TextToken.StartObject);
         await Assert.That(parsed[2].token).IsEqualTo(TextToken.KeyValue);
@@ -60,7 +60,7 @@ internal class YAMLParserTests {
 
     [Test]
     public async Task ComplexObject() {
-        List<(TextToken token, string value)> parsed = new(new YAMLParser(File.ReadAllText("../../../data/YAML/ComplexObject.yaml")));
+        List<(TextToken token, string value)> parsed = [.. new YAMLParser(File.ReadAllText("../../../data/YAML/ComplexObject.yaml"))];
         await Assert.That(parsed[0].token).IsEqualTo(TextToken.StartObject);
         await Assert.That(parsed[1].token).IsEqualTo(TextToken.KeyValue);
         await Assert.That(parsed[2].token).IsEqualTo(TextToken.StartObject);
@@ -110,7 +110,7 @@ internal class YAMLParserTests {
 
     [Test]
     public async Task MixedArray() {
-        List<(TextToken token, string value)> parsed = new(new YAMLParser(File.ReadAllText("../../../data/YAML/MixedArray.yml")));
+        List<(TextToken token, string value)> parsed = [.. new YAMLParser(File.ReadAllText("../../../data/YAML/MixedArray.yml"))];
         await Assert.That(parsed[0].token).IsEqualTo(TextToken.StartArray);
         await Assert.That(parsed[1].token).IsEqualTo(TextToken.StartObject);
         await Assert.That(parsed[2].token).IsEqualTo(TextToken.KeyValue);
@@ -127,7 +127,7 @@ internal class YAMLParserTests {
 
     [Test]
     public async Task ObjectWithArray() {
-        List<(TextToken token, string value)> parsed = new(new YAMLParser(File.ReadAllText("../../../data/YAML/ObjectWithArray.yaml")));
+        List<(TextToken token, string value)> parsed = [.. new YAMLParser(File.ReadAllText("../../../data/YAML/ObjectWithArray.yaml"))];
         await Assert.That(parsed[0].token).IsEqualTo(TextToken.StartObject);
         await Assert.That(parsed[1].token).IsEqualTo(TextToken.KeyValue);
         await Assert.That(parsed[2].token).IsEqualTo(TextToken.StartArray);

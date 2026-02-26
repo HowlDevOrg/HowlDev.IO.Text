@@ -32,7 +32,7 @@ public class ObjectConfigOption : BaseConfigOption {
 
             keys.Add(lowered);
         }
-        
+
         StringComparer comparer = new();
         this.obj = obj.ToFrozenDictionary(comparer);
         resourcePath = parentPath;

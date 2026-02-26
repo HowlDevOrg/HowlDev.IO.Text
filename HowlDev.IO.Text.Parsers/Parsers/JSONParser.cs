@@ -129,7 +129,7 @@ public class JSONParser(string file) : ITokenParser {
                     values.Add((TextToken.Primitive, value));
 
                 }
-                
+
                 return;
             }
         }
