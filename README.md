@@ -245,6 +245,12 @@ Some goals for next patch:
 
 ## Changelog
 
+3.3.1 (2/25/26)
+
+- Version bump
+- Changed ObjectConfigOption to a FrozenDictionary. This led to a slight increase in constructor time, as I now use HashSet to ensure no duplicate keys (though the frozen version wouldn't have both anyways).
+- Changed ArrayConfigOption to an ImmutableArray. I just wanted to make internal calls immutable. (and I think that Frozen is slightly better, but immutable is fine above that). 
+
 3.3.0 (2/20/26)
 
 - Now supports nested enumerables with the `As<>` keyword. Nested strings, ints, or other objects listed as an `IEnumerable`, `[]`, or `List`. 

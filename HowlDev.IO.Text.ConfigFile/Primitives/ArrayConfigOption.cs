@@ -1,5 +1,6 @@
 ﻿using HowlDev.IO.Text.ConfigFile.Enums;
 using HowlDev.IO.Text.ConfigFile.Interfaces;
+using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Reflection;
 
@@ -8,19 +9,19 @@ namespace HowlDev.IO.Text.ConfigFile.Primitives;
 /// <summary/>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public class ArrayConfigOption : BaseConfigOption {
-    private List<IBaseConfigOption> array = [];
+    private ImmutableArray<IBaseConfigOption> array;
     private string resourcePath;
 
     /// <inheritdoc/>
     public override ConfigOptionType Type => ConfigOptionType.Array;
     /// <inheritdoc/>
-    public override int Count => array.Count;
+    public override int Count => array.Length;
     /// <inheritdoc/>
     public override IEnumerable<IBaseConfigOption> Items => array;
 
     /// <inheritdoc/>
     public ArrayConfigOption(List<IBaseConfigOption> array, string parentPath = "", string myPath = "") {
-        this.array = array;
+        this.array = [.. array];
         resourcePath = parentPath;
         if (myPath.Length > 0) resourcePath += "[" + myPath + "]";
     }
@@ -28,8 +29,8 @@ public class ArrayConfigOption : BaseConfigOption {
     /// <inheritdoc/>
     public override IBaseConfigOption this[int index] {
         get {
-            if (index < 0 || index >= array.Count) {
-                string error = $"Index {index} is out of range. This array has {array.Count} items.";
+            if (index < 0 || index >= array.Length) {
+                string error = $"Index {index} is out of range. This array has {array.Length} items.";
                 if (resourcePath.Length >= 3) error += $"\n\tPath: {resourcePath}";
                 throw new ArgumentException(error);
             }
