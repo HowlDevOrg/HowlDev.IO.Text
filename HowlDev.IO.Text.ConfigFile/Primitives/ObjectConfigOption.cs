@@ -2,13 +2,14 @@
 using HowlDev.IO.Text.ConfigFile.Exceptions;
 using HowlDev.IO.Text.ConfigFile.Interfaces;
 using System.ComponentModel;
+using System.Reflection;
 
 namespace HowlDev.IO.Text.ConfigFile.Primitives;
 
 /// <summary/>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public class ObjectConfigOption : BaseConfigOption {
-    private Dictionary<string, IBaseConfigOption> obj = new Dictionary<string, IBaseConfigOption>();
+    private Dictionary<string, IBaseConfigOption> obj = [];
     private string resourcePath;
 
     /// <summary/>
@@ -27,7 +28,7 @@ public class ObjectConfigOption : BaseConfigOption {
     /// <summary/>
     public override IBaseConfigOption this[string key] {
         get {
-            if (!obj.TryGetValue(key, out var value)) {
+            if (!obj.TryGetValue(key, out IBaseConfigOption? value)) {
                 string error = $"Object does not contain key \"{key}\".";
                 if (resourcePath.Length >= 3) error += $"\n\tPath: {resourcePath}";
                 throw new KeyNotFoundException(error);
@@ -98,7 +99,7 @@ public class ObjectConfigOption : BaseConfigOption {
     /// <exception cref="InvalidOperationException"></exception>
     internal static T Map<T>(OptionMappingOptions options, Func<string, bool> func, IBaseConfigOption option) {
         if (options.UseConstructors) {
-            var ctors = typeof(T).GetConstructors();
+            ConstructorInfo[] ctors = typeof(T).GetConstructors();
 
             if (options.UseProperties) {
                 ctors = [.. ctors.Where(p => p.GetParameters().Length > 0)];
@@ -108,8 +109,8 @@ public class ObjectConfigOption : BaseConfigOption {
                 ctors = [.. ctors.Where(p => p.GetParameters().Length == option.Count)];
             }
 
-            foreach (var ctor in ctors.OrderByDescending(c => c.GetParameters().Length)) {
-                var parameters = ctor.GetParameters();
+            foreach (ConstructorInfo? ctor in ctors.OrderByDescending(c => c.GetParameters().Length)) {
+                ParameterInfo[] parameters = ctor.GetParameters();
                 bool canCreate = parameters.All(p => func(p.Name!));
 
                 if (canCreate) {
@@ -148,7 +149,7 @@ public class ObjectConfigOption : BaseConfigOption {
             }
 
             T instance = Activator.CreateInstance<T>()!;
-            var properties = typeof(T).GetProperties().Where(p => p.CanWrite);
+            IEnumerable<PropertyInfo> properties = typeof(T).GetProperties().Where(p => p.CanWrite);
 
             if (options.StrictMatching) {
                 if (properties.Count() != option.Count) {
@@ -161,8 +162,8 @@ public class ObjectConfigOption : BaseConfigOption {
                 }
             }
 
-            foreach (var prop in properties) {
-                if (option.TryGet(prop.Name, out var value)) {
+            foreach (PropertyInfo? prop in properties) {
+                if (option.TryGet(prop.Name, out IBaseConfigOption? value)) {
                     prop.SetValue(instance, Convert.ChangeType(value, prop.PropertyType));
                 } else if (options.StrictMatching) {
                     throw new StrictMappingException(

@@ -8,7 +8,7 @@ internal class ParseFileAsOptionTests {
     [Test]
     public async Task AllObjectsMustBeClosedBeforeEnding() {
         // { Lorem: {} 
-        var p = new PseudoTextParser([
+        PseudoTextParser p = new PseudoTextParser([
             (TextToken.StartObject, ""),
             (TextToken.KeyValue, "Lorem"),
             (TextToken.StartObject, ""),
@@ -48,7 +48,7 @@ internal class ParseFileAsOptionTests {
 
 internal class PseudoTextParser(IEnumerable<(TextToken, string)> list) : ITokenParser {
     public IEnumerator<(TextToken, string)> GetEnumerator() {
-        foreach (var item in list) yield return item;
+        foreach ((TextToken, string) item in list) yield return item;
     }
 
     IEnumerator IEnumerable.GetEnumerator() {

@@ -26,18 +26,18 @@ public class OptionMappingOptions {
     /// satisfies all values. <br/>
     /// Does nothing inside the AsProperties&lt;T&gt;() function.
     /// </summary>
-    public bool UseConstructors { get; init; } = false;
+    public bool UseConstructors { get; init; }
     /// <summary>
     /// Uses externally writable properties to fill parameters inside of an object. This action is performed 
     /// second and will be overriden by the <see cref="UseConstructors"/> flag. It will throw 
     /// an InvalidOperationException if no default constructor is available. <br/>
     /// Does nothing inside the AsConstructed&lt;T&gt;() function.
     /// </summary>
-    public bool UseProperties { get; init; } = false;
+    public bool UseProperties { get; init; }
     /// <summary>
     /// Enforces an exact match for property and/or constructor fields (whichever it's currently checking). Throws an error if the 
     /// length of the option is different from an available constructor or from all writable properties. <br/>
     /// Works in both the AsProperties&lt;T&gt;() and AsConstructed&lt;T&gt;() functions.
     /// </summary>
-    public bool StrictMatching { get; init; } = false;
+    public bool StrictMatching { get; init; }
 }

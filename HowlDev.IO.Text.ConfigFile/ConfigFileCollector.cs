@@ -45,7 +45,7 @@ public class ConfigFileCollector : IEnumerable<string> {
     /// </summary>
     /// <returns></returns>
     public IEnumerator<string> GetEnumerator() {
-        foreach (var k in files) {
+        foreach (KeyValuePair<string, TextConfigFile> k in files) {
             yield return k.Key;
         }
     }

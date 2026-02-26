@@ -44,12 +44,14 @@ public class TXTParser(string file) : ITokenParser {
                     if (string.IsNullOrWhiteSpace(value)) continue;
                     yield return (TextToken.Primitive, value);
                 }
+
                 yield return (TextToken.EndArray, "");
             } else {
                 yield return (TextToken.KeyValue, things[0].Trim());
                 yield return (TextToken.Primitive, things[1].Trim());
             }
         }
+
         yield return (TextToken.EndObject, "");
     }
 

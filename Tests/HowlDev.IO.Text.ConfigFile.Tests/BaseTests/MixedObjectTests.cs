@@ -6,13 +6,13 @@ public class MixedObjectTests {
     [Test]
     public async Task ObjectSecondOrderMixedTest() {
         ObjectConfigOption obj = new ObjectConfigOption(new Dictionary<string, IBaseConfigOption> {
-            { "first", new ArrayConfigOption(new List<IBaseConfigOption> {
+            { "first", new ArrayConfigOption([
                 new ObjectConfigOption(new Dictionary<string, IBaseConfigOption> {
                     { "first", new PrimitiveConfigOption("10") }
                 }, "test", "first"),
                 new PrimitiveConfigOption("20.2"),
                 new PrimitiveConfigOption("Lorem")
-            }, "test") },
+            ], "test") },
             { "second", new PrimitiveConfigOption("true") }
         }, "test");
 

@@ -1,6 +1,7 @@
 ﻿using HowlDev.IO.Text.ConfigFile.Enums;
 using HowlDev.IO.Text.ConfigFile.Interfaces;
 using System.ComponentModel;
+using System.Reflection;
 
 namespace HowlDev.IO.Text.ConfigFile.Primitives;
 
@@ -80,17 +81,18 @@ public class ArrayConfigOption : BaseConfigOption {
                 throw new InvalidDataException("Cannot determine element type.");
             }
 
-            var method = GetType().GetMethod(nameof(AsEnumerable), System.Type.EmptyTypes);
-            var genericMethod = method!.MakeGenericMethod(elementType);
+            MethodInfo? method = GetType().GetMethod(nameof(AsEnumerable), System.Type.EmptyTypes);
+            MethodInfo genericMethod = method!.MakeGenericMethod(elementType);
             var result = genericMethod.Invoke(this, null)!;
 
             if (conversionType.IsArray) {
-                var toArrayMethod = typeof(Enumerable).GetMethod(nameof(Enumerable.ToArray))!.MakeGenericMethod(elementType);
+                MethodInfo toArrayMethod = typeof(Enumerable).GetMethod(nameof(Enumerable.ToArray))!.MakeGenericMethod(elementType);
                 return toArrayMethod.Invoke(null, [result])!;
             }
 
             return result;
         }
+
         throw new InvalidDataException("Type conversion is not an enumerable.");
     }
 }

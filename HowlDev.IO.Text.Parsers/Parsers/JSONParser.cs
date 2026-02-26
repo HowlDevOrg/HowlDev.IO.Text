@@ -13,7 +13,8 @@ public class JSONParser(string file) : ITokenParser {
         if (!file.StartsWith("[") && !file.StartsWith("{")) {
             throw new InvalidDataException("JSON file must start with either [ or {");
         }
-        foreach (var item in ParseFileContents(fileValue)) yield return item;
+
+        foreach ((TextToken, string) item in ParseFileContents(fileValue)) yield return item;
     }
 
 
@@ -31,9 +32,10 @@ public class JSONParser(string file) : ITokenParser {
                         string segment = file.Substring(index, i - index).Trim();
                         if (!string.IsNullOrEmpty(segment)) {
                             bool inObject = contextStack.Count > 0 && contextStack.Peek();
-                            foreach (var item in ProcessSegment(segment, inObject)) yield return item;
+                            foreach ((TextToken, string) item in ProcessSegment(segment, inObject)) yield return item;
                         }
                     }
+
                     yield return (TextToken.StartObject, "");
                     contextStack.Push(true); // Push object context
                     index = i + 1;
@@ -44,9 +46,10 @@ public class JSONParser(string file) : ITokenParser {
                         string segment = file.Substring(index, i - index).Trim();
                         if (!string.IsNullOrEmpty(segment)) {
                             bool inObject = contextStack.Count > 0 && contextStack.Peek();
-                            foreach (var item in ProcessSegment(segment, inObject)) yield return item;
+                            foreach ((TextToken, string) item in ProcessSegment(segment, inObject)) yield return item;
                         }
                     }
+
                     yield return (TextToken.EndObject, "");
                     if (contextStack.Count > 0) contextStack.Pop(); // Pop object context
                     index = i + 1;
@@ -57,9 +60,10 @@ public class JSONParser(string file) : ITokenParser {
                         string segment = file.Substring(index, i - index).Trim();
                         if (!string.IsNullOrEmpty(segment)) {
                             bool inObject = contextStack.Count > 0 && contextStack.Peek();
-                            foreach (var item in ProcessSegment(segment, inObject)) yield return item;
+                            foreach ((TextToken, string) item in ProcessSegment(segment, inObject)) yield return item;
                         }
                     }
+
                     yield return (TextToken.StartArray, "");
                     contextStack.Push(false); // Push array context
                     index = i + 1;
@@ -70,9 +74,10 @@ public class JSONParser(string file) : ITokenParser {
                         string segment = file.Substring(index, i - index).Trim();
                         if (!string.IsNullOrEmpty(segment)) {
                             bool inObject = contextStack.Count > 0 && contextStack.Peek();
-                            foreach (var item in ProcessSegment(segment, inObject)) yield return item;
+                            foreach ((TextToken, string) item in ProcessSegment(segment, inObject)) yield return item;
                         }
                     }
+
                     yield return (TextToken.EndArray, "");
                     if (contextStack.Count > 0) contextStack.Pop(); // Pop array context
                     index = i + 1;
@@ -83,9 +88,10 @@ public class JSONParser(string file) : ITokenParser {
                         string segment = file.Substring(index, i - index).Trim();
                         if (!string.IsNullOrEmpty(segment)) {
                             bool inObject = contextStack.Count > 0 && contextStack.Peek();
-                            foreach (var item in ProcessSegment(segment, inObject)) yield return item;
+                            foreach ((TextToken, string) item in ProcessSegment(segment, inObject)) yield return item;
                         }
                     }
+
                     index = i + 1;
                     break;
                 default:
@@ -114,6 +120,7 @@ public class JSONParser(string file) : ITokenParser {
                     value = value.Trim('"');
                     yield return (TextToken.Primitive, value);
                 }
+
                 yield break;
             }
         }
@@ -141,9 +148,11 @@ public class JSONParser(string file) : ITokenParser {
                         currentPos++;
                     }
                 }
+
                 if (currentPos < file.Length) {
                     currentPos++; // Move past the closing quote
                 }
+
                 continue;
             }
 

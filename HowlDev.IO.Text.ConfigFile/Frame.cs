@@ -6,7 +6,7 @@ internal class Frame {
     public FrameKind Kind { get; }
     private Dictionary<string, IBaseConfigOption>? Obj;
     private List<IBaseConfigOption>? Arr;
-    private IBaseConfigOption? option = null;
+    private IBaseConfigOption? option;
 
 
     private string? pendingKey;

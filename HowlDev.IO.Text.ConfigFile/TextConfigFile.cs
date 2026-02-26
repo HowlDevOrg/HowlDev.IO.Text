@@ -133,6 +133,7 @@ public class TextConfigFile : IBaseConfigOption {
             case FileTypes.YAML: file.option = ConvertTokenStreamToConfigOption(new YAMLParser(fileValue)); break;
             case FileTypes.JSON: file.option = ConvertTokenStreamToConfigOption(new JSONParser(fileValue)); break;
         }
+
         return file;
     }
 
@@ -145,31 +146,33 @@ public class TextConfigFile : IBaseConfigOption {
     /// <param name="func">Object that implements <c>TokenParser</c> (IEnumerable&lt;(TextToken, string)&gt;).</param>
     /// <returns><see cref="IBaseConfigOption"/></returns>
     public static IBaseConfigOption ConvertTokenStreamToConfigOption(ITokenParser func) {
-        var stack = new Stack<Frame>();
+        Stack<Frame> stack = new Stack<Frame>();
         stack.Push(new Frame(FrameKind.Root));
 
-        foreach (var (type, value) in func) {
-            var frame = stack.Peek();
+        foreach ((TextToken type, string? value) in func) {
+            Frame frame = stack.Peek();
             switch (type) {
                 case TextToken.StartObject:
                     stack.Push(new Frame(FrameKind.Object));
                     break;
                 case TextToken.EndObject:
-                    var obj = stack.Pop();
+                    Frame obj = stack.Pop();
                     if (obj.Kind != FrameKind.Object) {
                         throw new InvalidOperationException("Cannot close an Array object with an EndObject token.");
                     }
-                    var parent = stack.Peek();
+
+                    Frame parent = stack.Peek();
                     parent.Add(obj.AsOption());
                     break;
                 case TextToken.StartArray:
                     stack.Push(new Frame(FrameKind.Array));
                     break;
                 case TextToken.EndArray:
-                    var arr = stack.Pop();
+                    Frame arr = stack.Pop();
                     if (arr.Kind != FrameKind.Array) {
                         throw new InvalidOperationException("Cannot close an Object object with an EndArray token.");
                     }
+
                     parent = stack.Peek();
                     parent.Add(arr.AsOption());
                     break;
@@ -188,6 +191,7 @@ public class TextConfigFile : IBaseConfigOption {
         if (stack.Count > 0) {
             throw new InvalidOperationException($"Not all objects were closed. Stack count post-parse: {stack.Count}");
         }
+
         return root.AsOption();
     }
 }
