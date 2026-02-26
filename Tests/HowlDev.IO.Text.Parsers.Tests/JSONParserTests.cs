@@ -5,7 +5,7 @@ namespace HowlDev.IO.Text.Parsers.Tests;
 internal class JSONParserTests {
     [Test]
     public async Task Array() {
-        List<(TextToken token, string value)> parsed = new(new JSONParser(File.ReadAllText("../../../data/JSON/SimpleArray.json")));
+        List<(TextToken token, string value)> parsed = [.. new JSONParser(File.ReadAllText("../../../data/JSON/SimpleArray.json"))];
         await Assert.That(parsed[0].token).IsEqualTo(TextToken.StartArray);
         await Assert.That(parsed[1].token).IsEqualTo(TextToken.Primitive);
         await Assert.That(parsed[2].token).IsEqualTo(TextToken.Primitive);
@@ -15,7 +15,7 @@ internal class JSONParserTests {
 
     [Test]
     public async Task Object() {
-        List<(TextToken token, string value)> parsed = new(new JSONParser(File.ReadAllText("../../../data/JSON/SimpleObject.json")));
+        List<(TextToken token, string value)> parsed = [.. new JSONParser(File.ReadAllText("../../../data/JSON/SimpleObject.json"))];
         await Assert.That(parsed[0].token).IsEqualTo(TextToken.StartObject);
         await Assert.That(parsed[1].token).IsEqualTo(TextToken.KeyValue);
         await Assert.That(parsed[1].value).IsEqualTo("lorem");
@@ -30,7 +30,7 @@ internal class JSONParserTests {
 
     [Test]
     public async Task ArrayWithObject() {
-        List<(TextToken token, string value)> parsed = new(new JSONParser(File.ReadAllText("../../../data/JSON/ArrayWithObject.json")));
+        List<(TextToken token, string value)> parsed = [.. new JSONParser(File.ReadAllText("../../../data/JSON/ArrayWithObject.json"))];
         await Assert.That(parsed[0].token).IsEqualTo(TextToken.StartArray);
         await Assert.That(parsed[1].token).IsEqualTo(TextToken.StartObject);
         await Assert.That(parsed[2].token).IsEqualTo(TextToken.KeyValue);
@@ -53,7 +53,7 @@ internal class JSONParserTests {
 
     [Test]
     public async Task ComplexObject() {
-        List<(TextToken token, string value)> parsed = new(new JSONParser(File.ReadAllText("../../../data/JSON/ComplexObject.json")));
+        List<(TextToken token, string value)> parsed = [.. new JSONParser(File.ReadAllText("../../../data/JSON/ComplexObject.json"))];
         await Assert.That(parsed[0].token).IsEqualTo(TextToken.StartObject);
         await Assert.That(parsed[1].token).IsEqualTo(TextToken.KeyValue);
         await Assert.That(parsed[2].token).IsEqualTo(TextToken.StartObject);
@@ -104,7 +104,7 @@ internal class JSONParserTests {
 
     [Test]
     public async Task ObjectWithArray() {
-        List<(TextToken token, string value)> parsed = new(new JSONParser(File.ReadAllText("../../../data/JSON/ObjectWithArray.json")));
+        List<(TextToken token, string value)> parsed = [.. new JSONParser(File.ReadAllText("../../../data/JSON/ObjectWithArray.json"))];
         await Assert.That(parsed[0].token).IsEqualTo(TextToken.StartObject);
         await Assert.That(parsed[1].token).IsEqualTo(TextToken.KeyValue);
         await Assert.That(parsed[2].token).IsEqualTo(TextToken.StartArray);
