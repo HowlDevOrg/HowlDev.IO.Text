@@ -23,6 +23,16 @@ public class ObjectConfigOption : BaseConfigOption {
 
     /// <summary/>
     public ObjectConfigOption(Dictionary<string, IBaseConfigOption> obj, string parentPath = "", string myPath = "") {
+        HashSet<string> keys = [];
+        foreach (string key in obj.Keys) {
+            string lowered = key.ToLower();
+            if (keys.Contains(lowered)) {
+                throw new ArgumentException($"An item with the same key has already been added. Key: {key}");
+            }
+
+            keys.Add(lowered);
+        }
+        
         StringComparer comparer = new();
         this.obj = obj.ToFrozenDictionary(comparer);
         resourcePath = parentPath;
