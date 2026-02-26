@@ -1,6 +1,7 @@
 using HowlDev.IO.Text.Parsers.Enums;
 using System.Collections;
 
+#pragma warning disable IDE0130
 namespace HowlDev.IO.Text.Parsers;
 
 /// <summary/>
