@@ -23,5 +23,13 @@ public class BrokenBookClass {
 }
 
 public class ArrayOfBooks {
-    public BookClass[] Books { get; set; } = [];
+    private BookClass[] books = [];
+
+    public BookClass[] GetBooks() {
+        return books;
+    }
+
+    public void SetBooks(BookClass[] value) {
+        books = value;
+    }
 }

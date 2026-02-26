@@ -31,7 +31,7 @@ public class ArrayConfigOption : BaseConfigOption {
             if (index < 0 || index >= array.Count) {
                 string error = $"Index {index} is out of range. This array has {array.Count} items.";
                 if (resourcePath.Length >= 3) error += $"\n\tPath: {resourcePath}";
-                throw new IndexOutOfRangeException(error);
+                throw new ArgumentException(error);
             }
 
             return array[index];
@@ -83,7 +83,7 @@ public class ArrayConfigOption : BaseConfigOption {
 
             MethodInfo? method = GetType().GetMethod(nameof(AsEnumerable), System.Type.EmptyTypes);
             MethodInfo genericMethod = method!.MakeGenericMethod(elementType);
-            var result = genericMethod.Invoke(this, null)!;
+            object result = genericMethod.Invoke(this, null)!;
 
             if (conversionType.IsArray) {
                 MethodInfo toArrayMethod = typeof(Enumerable).GetMethod(nameof(Enumerable.ToArray))!.MakeGenericMethod(elementType);

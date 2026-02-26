@@ -172,9 +172,9 @@ public class AsNestedEnumerableClassTests {
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.JSON, json);
         SimpleNestedString result = reader.As<SimpleNestedString>();
 
-        await Assert.That(result.Strings.Length).IsEqualTo(2);
-        await Assert.That(result.Strings[0]).IsEqualTo("name");
-        await Assert.That(result.Strings[1]).IsEqualTo("lorem");
+        await Assert.That(result.GetStrings().Length).IsEqualTo(2);
+        await Assert.That(result.GetStrings()[0]).IsEqualTo("name");
+        await Assert.That(result.GetStrings()[1]).IsEqualTo("lorem");
     }
 
     [Test]
@@ -226,12 +226,12 @@ public class AsNestedEnumerableClassTests {
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.JSON, json);
         ComplexIntsAndStrings result = reader.As<ComplexIntsAndStrings>();
 
-        await Assert.That(result.Ints.Length).IsEqualTo(2);
-        await Assert.That(result.Ints[0]).IsEqualTo(23);
-        await Assert.That(result.Ints[1]).IsEqualTo(5);
-        await Assert.That(result.Strings.Length).IsEqualTo(2);
-        await Assert.That(result.Strings[0]).IsEqualTo("Lorem");
-        await Assert.That(result.Strings[1]).IsEqualTo("Ipsum and more");
+        await Assert.That(result.GetInts().Length).IsEqualTo(2);
+        await Assert.That(result.GetInts()[0]).IsEqualTo(23);
+        await Assert.That(result.GetInts()[1]).IsEqualTo(5);
+        await Assert.That(result.GetStrings().Length).IsEqualTo(2);
+        await Assert.That(result.GetStrings()[0]).IsEqualTo("Lorem");
+        await Assert.That(result.GetStrings()[1]).IsEqualTo("Ipsum and more");
     }
 
     [Test]
@@ -254,13 +254,13 @@ public class AsNestedEnumerableClassTests {
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.JSON, json);
         ArrayOfBooks result = reader.As<ArrayOfBooks>();
 
-        await Assert.That(result.Books.Length).IsEqualTo(2);
-        await Assert.That(result.Books[0].Name).IsEqualTo("Little Women");
-        await Assert.That(result.Books[0].Weight).IsEqualTo(2.3);
-        await Assert.That(result.Books[0].Height).IsEqualTo(12.3);
-        await Assert.That(result.Books[1].Name).IsEqualTo("Great Gatsby");
-        await Assert.That(result.Books[1].Weight).IsEqualTo(15);
-        await Assert.That(result.Books[1].Height).IsEqualTo(0);
+        await Assert.That(result.GetBooks().Length).IsEqualTo(2);
+        await Assert.That(result.GetBooks()[0].Name).IsEqualTo("Little Women");
+        await Assert.That(result.GetBooks()[0].Weight).IsEqualTo(2.3);
+        await Assert.That(result.GetBooks()[0].Height).IsEqualTo(12.3);
+        await Assert.That(result.GetBooks()[1].Name).IsEqualTo("Great Gatsby");
+        await Assert.That(result.GetBooks()[1].Weight).IsEqualTo(15);
+        await Assert.That(result.GetBooks()[1].Height).IsEqualTo(0);
     }
 
     [Test]
@@ -277,10 +277,10 @@ public class AsNestedEnumerableClassTests {
         TextConfigFile reader = TextConfigFile.ReadTextAs(FileTypes.JSON, json);
         DoublyNestedStrings result = reader.As<DoublyNestedStrings>();
 
-        await Assert.That(result.UpperStrings.Length).IsEqualTo(3);
-        await Assert.That(result.UpperStrings[0].Strings.Length).IsEqualTo(2);
-        await Assert.That(result.UpperStrings[1].Strings.Length).IsEqualTo(2);
-        await Assert.That(result.UpperStrings[1].Strings[1]).IsEqualTo("four");
-        await Assert.That(result.UpperStrings[2].Strings.Length).IsEqualTo(1);
+        await Assert.That(result.GetUpperStrings().Length).IsEqualTo(3);
+        await Assert.That(result.GetUpperStrings()[0].GetStrings().Length).IsEqualTo(2);
+        await Assert.That(result.GetUpperStrings()[1].GetStrings().Length).IsEqualTo(2);
+        await Assert.That(result.GetUpperStrings()[1].GetStrings()[1]).IsEqualTo("four");
+        await Assert.That(result.GetUpperStrings()[2].GetStrings().Length).IsEqualTo(1);
     }
 }
