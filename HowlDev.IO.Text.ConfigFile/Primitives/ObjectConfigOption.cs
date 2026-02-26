@@ -1,7 +1,9 @@
 ﻿using HowlDev.IO.Text.ConfigFile.Enums;
 using HowlDev.IO.Text.ConfigFile.Exceptions;
 using HowlDev.IO.Text.ConfigFile.Interfaces;
+using System.Collections.Frozen;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace HowlDev.IO.Text.ConfigFile.Primitives;
@@ -9,7 +11,7 @@ namespace HowlDev.IO.Text.ConfigFile.Primitives;
 /// <summary/>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public class ObjectConfigOption : BaseConfigOption {
-    private Dictionary<string, IBaseConfigOption> obj = [];
+    private FrozenDictionary<string, IBaseConfigOption> obj;
     private string resourcePath;
 
     /// <summary/>
@@ -21,7 +23,8 @@ public class ObjectConfigOption : BaseConfigOption {
 
     /// <summary/>
     public ObjectConfigOption(Dictionary<string, IBaseConfigOption> obj, string parentPath = "", string myPath = "") {
-        this.obj = new(obj, StringComparer.OrdinalIgnoreCase);
+        StringComparer comparer = new();
+        this.obj = obj.ToFrozenDictionary(comparer);
         resourcePath = parentPath;
         if (myPath.Length > 0) resourcePath += "[" + myPath + "]";
     }
@@ -181,5 +184,15 @@ public class ObjectConfigOption : BaseConfigOption {
         throw new InvalidOperationException(
             $"Was not able to construct object for {typeof(T).Name}."
         );
+    }
+
+    private class StringComparer : IEqualityComparer<string> {
+        public bool Equals(string? x, string? y) {
+            return x?.ToLower() == y?.ToLower();
+        }
+
+        public int GetHashCode([DisallowNull] string obj) {
+            return obj.ToLower().GetHashCode();
+        }
     }
 }
